@@ -219,9 +219,9 @@ const LinkPin = (() => {
     const [dicks, setDicks] = useState(false)
 
     useEffect(() => {
-      if (url.match(/localhost/)) {
+      if (url.match(/throwdick/)) {
         const _url = new URL(url)
-        const symbolName = _url.pathname.replace(/\//, '')
+        const symbolName = _url.hash.replace(/#\//,'')
 
         fetch(`${window.host}/add-dicks-for/${symbolName}?c=0`)
           .then(data => data.json())
