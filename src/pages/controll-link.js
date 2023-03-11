@@ -131,6 +131,8 @@ const BlockTitle = styled.div`
   color: #FFFFFF;
   margin-top: 25px;
   margin-bottom: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
   text-shadow: 0px 0px 1px rgba(94, 94, 94, 0.5);
   max-width: 686px;
   width: calc(100% - 20px);

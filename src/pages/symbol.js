@@ -12,7 +12,6 @@ const View = styled.a`
   display: flex;
   align-items: center;
   flex-direction: column;
-  margin-top: 50px;
   margin-bottom: 20px;
 `
 
@@ -97,6 +96,8 @@ const BlockTitle = styled.div`
   color: #FFFFFF;
   margin-top: 25px;
   margin-bottom: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
   text-shadow: 0px 0px 1px rgba(94, 94, 94, 0.5);
   max-width: 686px;
   width: calc(100% - 20px);
@@ -124,7 +125,6 @@ const GoalWrapper = styled.div`
   padding: 20px 20px 10px 20px;
   box-sizing: border-box;
   overflow: hidden;
-  height: 100%;
   background: rgba(255, 216, 216, 0.42);
   border-radius: 15px;
   margin-bottom: 12px;
@@ -232,6 +232,16 @@ const GoalProgressPin = (() => {
   }
 })()
 
+const Wrapper = styled.div`
+  margin-top: 50px;
+
+  display: flex;
+
+  @media(max-width: 1164px) {
+    display: block;
+  }
+`
+
 const Symbol = (props) => {
   const location = useLocation()
   const navigate = useNavigate()
@@ -308,122 +318,128 @@ const Symbol = (props) => {
         }}
       />
       <CopyButton />
-      <View>
-        <Pic src={symbol.pic} position={symbol.picPosition} />
-        <Title style={{ width: `${window.innerWidth > 500 ? 500 : window.innerWidth - 150}px` }}>{symbol.title}</Title>
-        <Urlname style={{ width: `${window.innerWidth > 500 ? 500 : window.innerWidth - 150}px` }}>@{symbol.username}</Urlname>
-      </View>
-      <DicksCounter
-        symbolType={symbol.symbolType}
-        dickCount={dickCount}
-        onDick={x => {
-          setLocalDickCount(s => s + x)
-        }}
-      />
-      {
-        progressGoals.length > 0
-          ? (
-            <BlockTitle>Goals</BlockTitle>
-          )
-          : (
-            null
-          )
-      }
-      {
-          progressGoals.map(goal => (
-            <GoalWrapper key={goal.title+'-'+goal.date}>
-              <ContentTitle>{goal.title}</ContentTitle>
-              <ContentWrapper>
-                {
-                  goal.show
-                    ? (
-                      goal[goal.type].map((data, i) => (
-                        goal.type === 'link'
-                          ? (
-                            <LinkPin
-                              key={i}
-                              url={data.url}
-                              color={data.color}
-                              title={data.name}
-                            />
-                          )
-                          : (
-                            <PhotoPin
-                              key={i}
-                              onClick={() => window.open(data, '_blank')}
-                              style={{
-                                marginRight: i % 2 === 0 ? '10px' : '0px',
-                                marginBottom: '10px'
-                              }}
-                              isOnce={goal[goal.type].length === 1}
-                              src={data}
-                            />
-                          )
-                      ))
-                    )
-                    : (
-                      <>
-                        <GoalPin>Pined {goal[goal.type].length} {goal.type}{goal[goal.type].length > 1 ? 's': ''}</GoalPin>
-                        <GoalProgressPin request={goal.count} current={dickCount} symbolType={symbol.symbolType} />
-                      </>
-                    )
-                }
-              </ContentWrapper>
-            </GoalWrapper>
-          ))
-      }
-      {
-        showGoals.length > 0
-          ? (
-            <BlockTitle>Activated</BlockTitle>
-          )
-          : (
-            null
-          )
-      }
-      {
-          showGoals.map(goal => (
-            <GoalWrapper key={goal.title+'-'+goal.date}>
-              <ContentTitle>{goal.title}</ContentTitle>
-              <ContentWrapper>
-                {
-                  goal.show
-                    ? (
-                      goal[goal.type].map((data, i) => (
-                        goal.type === 'link'
-                          ? (
-                            <LinkPin
-                              key={i}
-                              url={data.url}
-                              color={data.color}
-                              title={data.name}
-                            />
-                          )
-                          : (
-                            <PhotoPin
-                              key={i}
-                              onClick={() => window.open(data, '_blank')}
-                              style={{
-                                marginRight: i % 2 === 0 ? goal[goal.type].length === 1 ? '0px' : '10px' : '0px',
-                                marginBottom: '10px'
-                              }}
-                              isOnce={goal[goal.type].length === 1}
-                              src={data}
-                            />
-                          )
-                      ))
-                    )
-                    : (
-                      <>
-                        <GoalPin>Pined {goal[goal.type].length} {goal.type}{goal[goal.type].length > 1 ? 's': ''}</GoalPin>
-                        <GoalProgressPin request={goal.count} current={dickCount} symbolType={symbol.symbolType} />
-                      </>
-                    )
-                }
-              </ContentWrapper>
-            </GoalWrapper>
-          ))
-      }
+      <Wrapper>
+        <div>
+          <View>
+            <Pic src={symbol.pic} position={symbol.picPosition} />
+            <Title style={{ width: `${window.innerWidth > 500 ? 500 : window.innerWidth - 150}px` }}>{symbol.title}</Title>
+            <Urlname style={{ width: `${window.innerWidth > 500 ? 500 : window.innerWidth - 150}px` }}>@{symbol.username}</Urlname>
+          </View>
+          <DicksCounter
+            symbolType={symbol.symbolType}
+            dickCount={dickCount}
+            onDick={x => {
+              setLocalDickCount(s => s + x)
+            }}
+          />
+        </div>
+        <div>
+          {
+            progressGoals.length > 0
+              ? (
+                <BlockTitle>Goals</BlockTitle>
+              )
+              : (
+                null
+              )
+          }
+          {
+              progressGoals.map(goal => (
+                <GoalWrapper key={goal.title+'-'+goal.date}>
+                  <ContentTitle>{goal.title}</ContentTitle>
+                  <ContentWrapper>
+                    {
+                      goal.show
+                        ? (
+                          goal[goal.type].map((data, i) => (
+                            goal.type === 'link'
+                              ? (
+                                <LinkPin
+                                  key={i}
+                                  url={data.url}
+                                  color={data.color}
+                                  title={data.name}
+                                />
+                              )
+                              : (
+                                <PhotoPin
+                                  key={i}
+                                  onClick={() => window.open(data, '_blank')}
+                                  style={{
+                                    marginRight: i % 2 === 0 ? '10px' : '0px',
+                                    marginBottom: '10px'
+                                  }}
+                                  isOnce={goal[goal.type].length === 1}
+                                  src={data}
+                                />
+                              )
+                          ))
+                        )
+                        : (
+                          <>
+                            <GoalPin>Pined {goal[goal.type].length} {goal.type}{goal[goal.type].length > 1 ? 's': ''}</GoalPin>
+                            <GoalProgressPin request={goal.count} current={dickCount} symbolType={symbol.symbolType} />
+                          </>
+                        )
+                    }
+                  </ContentWrapper>
+                </GoalWrapper>
+              ))
+          }
+          {
+            showGoals.length > 0
+              ? (
+                <BlockTitle>Activated</BlockTitle>
+              )
+              : (
+                null
+              )
+          }
+          {
+              showGoals.map(goal => (
+                <GoalWrapper key={goal.title+'-'+goal.date}>
+                  <ContentTitle>{goal.title}</ContentTitle>
+                  <ContentWrapper>
+                    {
+                      goal.show
+                        ? (
+                          goal[goal.type].map((data, i) => (
+                            goal.type === 'link'
+                              ? (
+                                <LinkPin
+                                  key={i}
+                                  url={data.url}
+                                  color={data.color}
+                                  title={data.name}
+                                />
+                              )
+                              : (
+                                <PhotoPin
+                                  key={i}
+                                  onClick={() => window.open(data, '_blank')}
+                                  style={{
+                                    marginRight: i % 2 === 0 ? goal[goal.type].length === 1 ? '0px' : '10px' : '0px',
+                                    marginBottom: '10px'
+                                  }}
+                                  isOnce={goal[goal.type].length === 1}
+                                  src={data}
+                                />
+                              )
+                          ))
+                        )
+                        : (
+                          <>
+                            <GoalPin>Pined {goal[goal.type].length} {goal.type}{goal[goal.type].length > 1 ? 's': ''}</GoalPin>
+                            <GoalProgressPin request={goal.count} current={dickCount} symbolType={symbol.symbolType} />
+                          </>
+                        )
+                    }
+                  </ContentWrapper>
+                </GoalWrapper>
+              ))
+          }
+        </div>
+      </Wrapper>
     </Body>
   ) : null
 }
