@@ -177,7 +177,7 @@ const LinkPin = (() => {
         const _url = new URL(url)
         const symbolName = _url.hash.replace(/#\//,'')
 
-        fetch(`${window.host}/add-dicks-for/${symbolName}?c=0`)
+        fetch(`${window.host}/get-dicks-for/${symbolName}`)
           .then(data => data.json())
           .then(data => setDicks(data[0]))
       }
