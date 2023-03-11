@@ -1,0 +1,22 @@
+<svg preserveaspectratio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="375" height="344" viewBox="0 0 375 344">
+    <path
+        id="motionPath"
+        fill="none"
+        stroke="#000000"
+        stroke-width="0"
+        stroke-miterlimit="10"
+        d="M 197.5 192.5 L 197.5 192.5 C 202.323 160.243 226.448 134.253 258.257 127.045 L 290.336 119.776 C 301.091 117.339 310.623 111.144 317.217 102.305 L 319.875 98.7415 C 326.592 89.7384 328.86 78.1736 326.041 67.3006 L 326.041 67.3006 C 320.812 47.1337 299.985 35.2458 279.961 40.9996 L 273 43 L 273 43 C 250.184 49.9439 226.31 52.7475 202.506 51.2781 L 198 51"
+    ></path>
+    <g id="car" style="transform: rotate(90deg) translateX(-10px) translateY(0px);">
+        <path
+            id="fuck"
+            fill-opacity="0.5"
+            d="M30 0C22.4521 0 16.3333 6.11878 16.3333 13.6667V56.022C16.0574 56.0074 15.7796 56 15.5 56C6.93959 56 0 62.9396 0 71.5C0 80.0604 6.93959 87 15.5 87C21.5418 87 26.7762 83.5432 29.3333 78.4994C31.8904 83.5432 37.1249 87 43.1667 87C51.7271 87 58.6667 80.0604 58.6667 71.5C58.6667 63.1069 51.9957 56.2719 43.6667 56.0079V13.6667C43.6667 6.11877 37.5479 0 30 0Z"
+            fill="white"
+        >
+            <animateTransform xlink:href="#fuck" attributeName="transform" type="scale" values="0.5;0.3" dur="0.8s" fill="freeze"></animateTransform>
+            <animate xlink:href="#fuck" attributeName="opacity" attributeType="CSS" values="0.8;1;1;1;1;1;0.9;0" begin="0s" dur="0.8s" fill="freeze"></animate>
+        </path>
+    </g>
+    <animateMotion rotate="auto" xlink:href="#car" dur="0.8s" begin="0s" fill="freeze"><mpath xlink:href="#motionPath"></mpath></animateMotion>
+</svg>
