@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/throwdick/static/css/main.268aa2b7.css",
-    "main.js": "/throwdick/static/js/main.576d0e60.js",
+    "main.js": "/throwdick/static/js/main.3f8b332f.js",
     "static/media/loader.svg": "/throwdick/static/media/loader.57c810adfcff7133ce57bb612762745f.svg",
     "static/media/heart-animation-4.svg": "/throwdick/static/media/heart-animation-4.31863d2e6789b541724884e591916fb6.svg",
     "static/media/heart-animation-2.svg": "/throwdick/static/media/heart-animation-2.96b810b806027502e404c9da9e16968f.svg",
@@ -39,10 +39,10 @@
     "static/media/meta-12.svg": "/throwdick/static/media/meta-12.14ca8b4c79171d86e30dbf9cfa867f2c.svg",
     "static/media/meta-7.svg": "/throwdick/static/media/meta-7.4795d8ee11902a3524ad1f9047ec9599.svg",
     "main.268aa2b7.css.map": "/throwdick/static/css/main.268aa2b7.css.map",
-    "main.576d0e60.js.map": "/throwdick/static/js/main.576d0e60.js.map"
+    "main.3f8b332f.js.map": "/throwdick/static/js/main.3f8b332f.js.map"
   },
   "entrypoints": [
     "static/css/main.268aa2b7.css",
-    "static/js/main.576d0e60.js"
+    "static/js/main.3f8b332f.js"
   ]
 }
