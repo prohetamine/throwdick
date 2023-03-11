@@ -40,6 +40,16 @@ const IconCopy = ({ isActive }) => {
   )
 }
 
+const IconManager = ({ isActive }) => {
+  return (
+    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="6.5" y="7.5" width="17" height="3" rx="1.5" fill={isActive ? 'white' : 'black'} />
+      <rect x="6.5" y="13.5" width="17" height="3" rx="1.5" fill={isActive ? 'white' : 'black'} />
+      <rect x="6.5" y="19.5" width="17" height="3" rx="1.5" fill={isActive ? 'white' : 'black'} />
+    </svg>
+  )
+}
+
 const WrapperAnimation = styled(motion.div)``
 
 const Body = styled(motion.div)`
@@ -132,6 +142,13 @@ const Button = ({ icon, onClick, style }) => {
           icon === 'copy'
             ? (
               <IconCopy isActive={isActive} />
+            )
+            : null
+        }
+        {
+          icon === 'manager'
+            ? (
+              <IconManager isActive={isActive} />
             )
             : null
         }

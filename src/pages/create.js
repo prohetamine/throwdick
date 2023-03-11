@@ -121,6 +121,21 @@ const Create = () => {
     fetch(`${window.host}/create/${username}`)
       .then(data => data.text())
       .then(data => {
+        if (window.localStorage.manager) {
+          window.localStorage.manager = JSON.stringify([
+            ...JSON.parse(window.localStorage.manager),
+            {
+              username,
+              link: data
+            }
+          ])
+        } else {
+          window.localStorage.manager = JSON.stringify([{
+            username,
+            link: data
+          }])
+        }
+
         window.pageAnimationRouter({ from: 0, to: 1 })
         navigate(data)
       })
@@ -148,6 +163,24 @@ const Create = () => {
           zIndex: 9999,
           top: '10px',
           left: '10px'
+        }}
+      />
+      <Button
+        onClick={() => {
+          window.pageAnimationRouter({ from: 0, to: 1 })
+          navigate('/manager')
+          window.scroll({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+          })
+        }}
+        icon='manager'
+        style={{
+          position: 'fixed',
+          zIndex: 9999,
+          top: '10px',
+          right: '10px'
         }}
       />
       <DescriptionWrapper>

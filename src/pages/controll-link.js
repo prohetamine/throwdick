@@ -272,6 +272,7 @@ const ControllLink = () => {
       , [pic, setPic] = useState('')
       , [goals, setGoals] = useState([])
       , [symbolType, setSymbolType] = useState('dick')
+      , [symbolVisible, setSymbolVisible] = useState(true)
       , [dickCount, setDickCount] = useState(null)
 
   const [goalTitle, setGoalTitle] = useState('')
@@ -308,7 +309,7 @@ const ControllLink = () => {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ goals, title, pic, symbolType })
+      body: JSON.stringify({ goals, title, pic, symbolType, symbolVisible })
     })
       .then(data => data.json())
       .then(data => console.log(data))
@@ -351,6 +352,9 @@ const ControllLink = () => {
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <BigButton onClick={() => setSymbolType('dick')}>Dick {symbolType === 'dick' ? '✅' : '❌'}</BigButton>
         <BigButton onClick={() => setSymbolType('heart')}>Heart {symbolType === 'heart' ? '✅' : '❌'}</BigButton>
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <BigButton onClick={() => setSymbolVisible(s => !s)}>Visible profile {symbolVisible ? '✅' : '❌'}</BigButton>
       </div>
       <BigButton onClick={() => saveSymbol()}>Save symbol</BigButton>
       <BlockTitle>Goal</BlockTitle>

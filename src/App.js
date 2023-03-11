@@ -9,6 +9,7 @@ import Symbol from './pages/symbol'
 import Search from './pages/search'
 import Create from './pages/create'
 import ControllLink from './pages/controll-link'
+import Manager from './pages/manager'
 
 const PageBody = styled(motion.div)`
   width: 100vw;
@@ -80,6 +81,19 @@ const App = () => {
               variants={variants}
             >
               <ControllLink />
+            </PageBody>
+          }
+        />
+        <Route
+          path='/manager'
+          element={
+            <PageBody
+              initial={initialFrom}
+              exit={exitTo}
+              animate={'current'}
+              variants={variants}
+            >
+              <Manager />
             </PageBody>
           }
         />
