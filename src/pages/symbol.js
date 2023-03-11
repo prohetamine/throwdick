@@ -173,7 +173,7 @@ const LinkPin = (() => {
     const [dicks, setDicks] = useState(false)
 
     useEffect(() => {
-      if (url.match(/localhost/)) {
+      if (url.match(/throwdick/)) {
         const _url = new URL(url)
         const symbolName = _url.pathname.replace(/\//, '')
 

@@ -67,6 +67,15 @@ const Input = styled.input`
   box-shadow: 0px 0px 1px rgba(94, 94, 94, 0.5);
 `
 
+const Wrapper = styled.div`
+  max-width: 666px;
+  display: flex;
+  box-sizing: border-box;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: calc(100% - 20px);
+`
+
 const BigButton = styled.div`
   min-height: 71px;
   max-height: 71px;
@@ -85,8 +94,6 @@ const BigButton = styled.div`
   padding-right: 17px;
   box-sizing: border-box;
   color: #FFFFFF;
-  margin-left: 10px;
-  margin-right: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -271,6 +278,7 @@ const ControllLink = () => {
   const [title, setTitle] = useState('')
       , [pic, setPic] = useState('')
       , [goals, setGoals] = useState([])
+      , [username, setUsername] = useState('')
       , [symbolType, setSymbolType] = useState('dick')
       , [symbolVisible, setSymbolVisible] = useState(true)
       , [dickCount, setDickCount] = useState(null)
@@ -292,7 +300,9 @@ const ControllLink = () => {
           setSymbolType(data.symbolType)
           setTitle(data.title)
           setGoals(data.goals)
+          setUsername(data.username)
           setDickCount(data.dicks)
+          setSymbolVisible(data.symbolVisible)
         } else {
           window.pageAnimationRouter({ from: 0, to: 1 })
           navigate('/create')
@@ -309,7 +319,13 @@ const ControllLink = () => {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ goals, title, pic, symbolType, symbolVisible })
+      body: JSON.stringify({
+        goals: goals,
+        title,
+        pic,
+        symbolType,
+        symbolVisible
+      })
     })
       .then(data => data.json())
       .then(data => console.log(data))
@@ -349,23 +365,27 @@ const ControllLink = () => {
       <BlockTitle>Profile</BlockTitle>
       <Input value={title} onChange={({ target: { value } }) => setTitle(value)} placeholder='Title' />
       <Input value={pic} onChange={({ target: { value } }) => setPic(value)} placeholder='Picture url' />
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <BigButton onClick={() => setSymbolType('dick')}>Dick {symbolType === 'dick' ? '✅' : '❌'}</BigButton>
+      <Wrapper>
+        <BigButton style={{ marginRight: '20px' }} onClick={() => setSymbolType('dick')}>Dick {symbolType === 'dick' ? '✅' : '❌'}</BigButton>
         <BigButton onClick={() => setSymbolType('heart')}>Heart {symbolType === 'heart' ? '✅' : '❌'}</BigButton>
-      </div>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
+      </Wrapper>
+      <Wrapper>
         <BigButton onClick={() => setSymbolVisible(s => !s)}>Visible profile {symbolVisible ? '✅' : '❌'}</BigButton>
-      </div>
-      <BigButton onClick={() => saveSymbol()}>Save symbol</BigButton>
+      </Wrapper>
+      <Wrapper>
+        <BigButton style={{ marginRight: '20px' }} onClick={() => saveSymbol()}>Update symbol</BigButton>
+        <BigButton onClick={() => window.open(window.location.origin+'#/'+username)}>Open symbol</BigButton>
+      </Wrapper>
       <BlockTitle>Goal</BlockTitle>
       <Input value={goalTitle} onChange={({ target: { value } }) => setGoalTitle(value)} placeholder='Title' />
       <Input value={goalCount} onChange={({ target: { value } }) => setGoalCount(value)} placeholder={`${symbolType}s count`} />
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <Wrapper>
         <BigButton
           onClick={() => {
             setGoalType('photo')
             setGoalContent([])
           }}
+          style={{ marginRight: '20px' }}
         >Photo {goalType === 'photo' ? '✅' : '❌'}</BigButton>
         <BigButton
           onClick={() => {
@@ -373,39 +393,37 @@ const ControllLink = () => {
             setGoalContent([])
           }}
         >Link {goalType === 'link' ? '✅' : '❌'}</BigButton>
-      </div>
-      <BigButton onClick={() => setGoalContent(s => [...s, goalType === 'photo' ? '' : { name: '', url: '', color: '#fa0' }])}>Create {goalType} +</BigButton>
+      </Wrapper>
+      <Wrapper>
+        <BigButton onClick={() => setGoalContent(s => [...s, goalType === 'photo' ? '' : { name: '', url: '', color: '#fa0' }])}>Create {goalType} +</BigButton>
+      </Wrapper>
       {
         goalContent.map((content, i) => (
-          <div
+          <Wrapper
             key={i}
-            style={{
-              display: 'flex',
-              flexDirection: 'column'
-            }}
           >
             {
               typeof(content) !== 'string'
                 ? (
-                  <div
+                  <Wrapper
                     style={{
                       display: 'flex',
-                      flexDirection: 'column'
+                      flexDirection: 'row',
                     }}
                   >
                     <Input value={content.name} onChange={({ target: { value } }) => setGoalContent(s => s.map((c, _i) => _i === i ? ({ ...c, name: value }) : c))} placeholder='Name' />
                     <Input value={content.url} onChange={({ target: { value } }) => setGoalContent(s => s.map((c, _i) => _i === i ? ({ ...c, url: value }) : c))} placeholder='URL' />
                     <Input value={content.color} onChange={({ target: { value } }) => setGoalContent(s => s.map((c, _i) => _i === i ? ({ ...c, color: value }) : c))} placeholder='Color' />
-                  </div>
+                  </Wrapper>
                 )
                 : (
                   <Input value={content} onChange={({ target: { value } }) => setGoalContent(s => s.map((c, _i) => _i === i ? value : c))} placeholder='Pictrue url' />
                 )
             }
-          </div>
+          </Wrapper>
         ))
       }
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <Wrapper>
         <BigButton
           onClick={() => {
             setGoals(
@@ -413,14 +431,15 @@ const ControllLink = () => {
                 ...s,
                 {
                   date: new Date() - 0,
-                  title: goalTitle,
-                  count: goalCount,
+                  title: goalTitle || 'Empty',
+                  count: goalCount || 0,
                   type: goalType,
-                  [goalType]: goalContent
+                  [goalType]: goalContent.filter(c => goalType ==='link' ? (c.name && c.url && c.color) : c)
                 }
               ]
             )
           }}
+          style={{ marginRight: '20px' }}
         >Add goal</BigButton>
         <BigButton
           onClick={() => {
@@ -430,8 +449,11 @@ const ControllLink = () => {
             setGoalContent([])
           }}
         >Clear goal</BigButton>
-      </div>
-      <BigButton onClick={() => saveSymbol()}>Save symbol</BigButton>
+      </Wrapper>
+      <Wrapper>
+        <BigButton style={{ marginRight: '20px' }} onClick={() => saveSymbol()}>Update goals</BigButton>
+        <BigButton onClick={() => window.open(window.location.origin+'#/'+username)}>Open symbol</BigButton>
+      </Wrapper>
       {
         progressGoals.length > 0
           ? (

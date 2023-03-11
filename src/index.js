@@ -6,7 +6,7 @@ import App from './App'
 
 const node = document.getElementById('root')
 
-window.host = 'http://192.168.1.60:9999' ///'https://throwdick.voltica.me' // 
+window.host = 'https://server.throwdick.com'
 
 const react = ReactDOM.createRoot(node)
 
