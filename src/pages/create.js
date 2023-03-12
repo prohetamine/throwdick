@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
-import { motion } from 'framer-motion'
 import loader from './../assets/loader.svg'
 
 import Body from './../components/body'
@@ -188,7 +187,20 @@ const Create = () => {
       </DescriptionWrapper>
       <UserListLoad src={loader} />
       <Input value={username} placeholder='username' onChange={({ target: { value } }) => setUsername(value)} />
-      <BigButton onClick={() => create(username)}>Create symbol</BigButton>
+      <div style={{ display: 'flex' }}>
+        <BigButton onClick={() => create(username)}>Create symbol</BigButton>
+        <BigButton
+          onClick={() => {
+            window.pageAnimationRouter({ from: 0, to: 1 })
+            navigate('/manager')
+            window.scroll({
+              top: 0,
+              left: 0,
+              behavior: 'smooth'
+            })
+          }}
+        >My symbols</BigButton>
+      </div>
     </Body>
   )
 }

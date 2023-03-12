@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import { motion } from 'framer-motion'
-import normalizeCount from './../lib/normalize-count'
 import loader from './../assets/loader.svg'
 import Body from './../components/body'
 import Button from './../components/button'
@@ -85,21 +83,6 @@ const DescriptionWrapper = styled.div`
   box-shadow: 0px 0px 1px rgba(94, 94, 94, 0.5);
 `
 
-const Pic = styled.div`
-  background-color: #ddd;
-  border-radius: 100%;
-  width: 82px;
-  height: 82px;
-  filter: drop-shadow(0px 0px 1px rgba(94, 94, 94, 0.5));
-  background-image: url(${props => props.src});
-  background-size: ${props => props.position[2]};
-  background-position: ${props => props.position[0]}% ${props => props.position[1]}%;
-`
-
-const View = styled.div`
-  position: relative;
-`
-
 const Title = styled.div`
   text-overflow: ellipsis;
   overflow-x: hidden;
@@ -111,42 +94,6 @@ const Title = styled.div`
   line-height: 32px;
   color: #FFFFFF;
   white-space: nowrap;
-  text-shadow: 0px 0px 1px rgba(94, 94, 94, 0.5);
-`
-
-const Urlname = styled.div`
-  text-overflow: ellipsis;
-  overflow-x: hidden;
-  user-select: none;
-  cursor: pointer;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 17px;
-  line-height: 20px;
-  color: #FFFFFF;
-  display: inline-block;
-  margin-top: 5px;
-  white-space: nowrap;
-  position: absolute;
-  top: -10px;
-  left: 15px;
-  text-shadow: 0px 0px 1px rgba(94, 94, 94, 0.5);
-`
-
-const DicksCount = styled.div`
-  height: 32px;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 46px;
-  display: flex;
-  align-items: center;
-  text-align: right;
-  color: #FFFFFF;
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
   text-shadow: 0px 0px 1px rgba(94, 94, 94, 0.5);
 `
 
@@ -165,8 +112,7 @@ const UserListLoad = styled.img`
   -ms-user-select: none;
 `
 
-
-const Search = () => {
+const Manager = () => {
   const navigate = useNavigate()
 
   const [search, setSearch] = useState('')
@@ -180,12 +126,32 @@ const Search = () => {
     }
   }, [])
 
+  const searchRegExp = new RegExp(search, 'gi')
+
   return (
     <Body
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
+      <Button
+        onClick={() => {
+          window.pageAnimationRouter({ from: 1, to: 0 })
+          navigate('/search')
+          window.scroll({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+          })
+        }}
+        icon='search'
+        style={{
+          position: 'fixed',
+          zIndex: 9999,
+          top: '10px',
+          left: '10px'
+        }}
+      />
       <Button
         onClick={() => {
           window.pageAnimationRouter({ from: 0, to: 1 })
@@ -206,7 +172,7 @@ const Search = () => {
       />
       <SearchBox value={search} onChange={({ target: { value } }) => setSearch(value)} placeholder='@username or title' />
       {
-        symbols.map(symbol =>
+        symbols.filter(s => search.length === 0 ? true : s.username.match(searchRegExp)).map(symbol =>
           <Link
             key={symbol.username+'-'+symbol.link}
             to={`${symbol.link}`}
@@ -244,4 +210,4 @@ const Search = () => {
   )
 }
 
-export default Search
+export default Manager

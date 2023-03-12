@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import { motion } from 'framer-motion'
 import normalizeCount from './../lib/normalize-count'
 import loader from './../assets/loader.svg'
 import Body from './../components/body'
 import Button from './../components/button'
+import SwitherButton from './../components/swither-button'
 
 const SearchBox = styled.input`
   max-width: 666px;
@@ -174,10 +174,11 @@ const Search = () => {
   const navigate = useNavigate()
 
   const [search, setSearch] = useState('')
+      , [searchType, setSearchType] = useState('dick')
       , [symbols, setSymbols] = useState([])
 
   useEffect(() => {
-    fetch(`${window.host}/find/-`)
+    fetch(`${window.host}/find/-?${searchType === 'heart' ? 'isHeart=1' : ''}`)
       .then(data => data.json())
       .then(data => setSymbols(data))
       .catch(e => alert(e.message))
@@ -185,13 +186,13 @@ const Search = () => {
 
   useEffect(() => {
     const timeId = setTimeout(() => {
-      fetch(`${window.host}/find/${search || '-'}`)
+      fetch(`${window.host}/find/${search || '-'}?${searchType === 'heart' ? 'isHeart=1' : ''}`)
         .then(data => data.json())
         .then(data => setSymbols(data))
     }, 1000)
 
     return () => clearTimeout(timeId)
-  }, [search])
+  }, [search, searchType])
 
   return (
     <Body
@@ -217,6 +218,7 @@ const Search = () => {
           right: '10px'
         }}
       />
+      <SwitherButton value={searchType} onClick={type => setSearchType(type)} />
       <SearchBox value={search} onChange={({ target: { value } }) => setSearch(value)} placeholder='@username or title' />
       {
         symbols.map(symbol =>

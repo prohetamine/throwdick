@@ -297,7 +297,6 @@ const ControllLink = () => {
       .then(data => data.json())
       .then(data => {
         if (data) {
-          console.log(data)
           setPic(data.pic)
           setSymbolType(data.symbolType)
           setTitle(data.title)
@@ -434,7 +433,7 @@ const ControllLink = () => {
                 {
                   date: new Date() - 0,
                   title: goalTitle || 'Empty',
-                  count: goalCount || 0,
+                  count: (new BigNumber(dickCount).plus(goalCount || 0)).toFormat().split(',').join(''),
                   type: goalType,
                   [goalType]: goalContent.filter(c => goalType ==='link' ? (c.name && c.url && c.color) : c)
                 }
