@@ -470,7 +470,7 @@ const Symbol = () => {
                                   url={data.url}
                                   color={data.color}
                                   title={data.name}
-                                  isClickable={(new BigNumber(symbol.goalsAccess)).isGreaterThan(new BigNumber(dicksSymbolAccess))}
+                                  isClickable={!(new BigNumber(symbol.goalsAccess)).isGreaterThan(new BigNumber(dicksSymbolAccess))}
                                   style={{
                                     filter: `blur(${dicksSymbolAccess < symbol.goalsAccess ? '3px' : '0px'})`
                                   }}
