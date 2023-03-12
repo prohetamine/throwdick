@@ -305,7 +305,7 @@ const ControllLink = () => {
           setUsername(data.username)
           setDickCount(data.dicks)
           setSymbolVisible(data.symbolVisible)
-          goalsAccess(data.goalsAccess)
+          setGoalAccess(data.goalsAccess)
         } else {
           window.pageAnimationRouter({ from: 0, to: 1 })
           navigate('/create')
