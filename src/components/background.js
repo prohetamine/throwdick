@@ -1,4 +1,4 @@
-import Phaser from 'phaser'
+import TWEEN from '@tweenjs/tween.js'
 
 import Meta1 from './../assets/meta-1.svg'
 import Meta2 from './../assets/meta-2.svg'
@@ -174,6 +174,79 @@ const metas = [
   }
 ]
 
+const canvas = document.createElement('canvas')
+canvas.width = 2200
+canvas.height = 2000
+
+const parent = document.querySelector('#canvas-background')
+parent.appendChild(canvas)
+
+const ctx = canvas.getContext('2d')
+
+window.TWEEN = TWEEN
+
+window.tween = new TWEEN.Tween({ s: 1, r: 0, a: 1 }).to({ s: 0.3, r: 0.5, a: -0.3 }, 1000).easing(TWEEN.Easing.Back.InOut)
+window.tween2 = new TWEEN.Tween({ s: 0.3, r: 0.5, a: -0.3 }).to({ s: 1, r: 0, a: 1 }, 1000).easing(TWEEN.Easing.Back.InOut)
+
+let intervalId = null
+
+window.animateBackground = () => {
+  if (window.animateBackgroundBlocker === undefined) {
+    window.animateBackgroundBlocker = false
+  }
+
+  if (window.animateBackgroundBlocker) {
+    return
+  }
+
+  window.animateBackgroundBlocker = true
+  intervalId = setInterval(() => {
+    TWEEN.update()
+  }, 10)
+
+  setTimeout(() => {
+    window.tween.start()
+  }, 100)
+}
+
+window.tween.onComplete(() => {
+  window.tween2.start()
+})
+
+window.tween2.onComplete(() => {
+  if (intervalId) {
+    clearInterval(intervalId)
+    window.animateBackgroundBlocker = false
+  }
+})
+
+window.metaObjects = metas.map(meta => {
+  const img = new Image()
+  img.src = meta.image
+
+  return ({ ...meta, image: img })
+})
+
+const drawing = ({ s, r, a }) => {
+  ctx.clearRect(0, 0, 2200, 2000)
+
+  window.metaObjects.map(({ x, y, image }) => {
+    ctx.save()
+    ctx.translate(x, y)
+    ctx.scale(s, s)
+    ctx.globalAlpha = a > 0 ? a : 0
+    ctx.rotate(r)
+    ctx.drawImage(image, -(image.width / 2), -(image.height / 2), image.width, image.height)
+    ctx.restore()
+  })
+}
+
+window.tween.onUpdate(drawing)
+window.tween2.onUpdate(drawing)
+
+
+/*
+
 const config = {
   type: Phaser.CANVAS,
   transparent: true,
@@ -246,3 +319,4 @@ const config = {
 }
 
 window.game = new Phaser.Game(config)
+*/
