@@ -245,15 +245,9 @@ const LocalGoalProgressPin = (() => {
     margin-bottom: 10px;
   `
 
-  return ({ localDicks, symbolType }) => {
-    const isRemained = localDicks > 500
-
-    if (isRemained) {
-      window.location.reload()
-    }
-
+  return ({ remains, symbolType }) => {
     return (
-      <Body>{isRemained ? `Available for viewing` : `Media access for you: ${500 - localDicks} ${symbolType}s`}</Body>
+      <Body>{`Goal access for you: ${remains} ${symbolType}s`}</Body>
     )
   }
 })()
@@ -357,7 +351,9 @@ const Symbol = () => {
             symbolType={symbol.symbolType}
             dickCount={dickCount}
             onDick={x => {
-              setDicksSymbolAccess(s => s + x)
+              if (symbol.goalsAccess > dicksSymbolAccess) {
+                setDicksSymbolAccess(s => s + x)
+              }
               setLocalDickCount(s => s + x)
             }}
           />
@@ -399,11 +395,11 @@ const Symbol = () => {
                                 : (
                                   <PhotoPin
                                     key={i}
-                                    onClick={() => dicksSymbolAccess < 500 ? '' : window.open(data, '_blank')}
+                                    onClick={() => dicksSymbolAccess < symbol.goalsAccess ? '' : window.open(data, '_blank')}
                                     style={{
                                       marginRight: i % 2 === 0 ? '10px' : '0px',
                                       marginBottom: '10px',
-                                      filter: `blur(${dicksSymbolAccess < 500 ? '10px' : '0px'})`
+                                      filter: `blur(${dicksSymbolAccess < symbol.goalsAccess ? '10px' : '0px'})`
                                     }}
                                     isOnce={goal[goal.type].length === 1}
                                     src={data}
@@ -445,13 +441,13 @@ const Symbol = () => {
               showGoals.map((goal, i) => (
                 <GoalWrapper key={goal.title+'-'+goal.date}>
                   <ContentTitle>{goal.title}</ContentTitle>
-                  <ContentWrapper style={{ marginTop: (goal.type === 'photo' && dicksSymbolAccess < 500) ? '20px' : '0px' }}>
+                  <ContentWrapper style={{ marginTop: (goal.type === 'photo' && dicksSymbolAccess < symbol.goalsAccess) ? '20px' : '0px' }}>
                     {
-                      goal.type === 'photo' && dicksSymbolAccess < 500
+                      goal.type === 'photo' && dicksSymbolAccess < symbol.goalsAccess
                         ? (
                           <>
                             <GoalPin>Pined {goal[goal.type].length} {goal.type}{goal[goal.type].length > 1 ? 's': ''}</GoalPin>
-                            <LocalGoalProgressPin localDicks={dicksSymbolAccess} symbolType={symbol.symbolType} />
+                            <LocalGoalProgressPin remains={symbol.goalsAccess - dicksSymbolAccess} symbolType={symbol.symbolType} />
                           </>
                         )
                         : (
@@ -475,11 +471,11 @@ const Symbol = () => {
                               : (
                                 <PhotoPin
                                   key={i}
-                                  onClick={() => dicksSymbolAccess < 500 ? '' : window.open(data, '_blank')}
+                                  onClick={() => dicksSymbolAccess < symbol.goalsAccess ? '' : window.open(data, '_blank')}
                                   style={{
                                     marginRight: i % 2 === 0 ? goal[goal.type].length === 1 ? '0px' : '5px' : '0px',
                                     marginBottom: '10px',
-                                    filter: `blur(${dicksSymbolAccess < 500 ? '10px' : '0px'})`
+                                    filter: `blur(${dicksSymbolAccess < symbol.goalsAccess ? '10px' : '0px'})`
                                   }}
                                   isOnce={goal[goal.type].length === 1}
                                   src={data}

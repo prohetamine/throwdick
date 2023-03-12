@@ -284,6 +284,7 @@ const ControllLink = () => {
       , [symbolType, setSymbolType] = useState('dick')
       , [symbolVisible, setSymbolVisible] = useState(true)
       , [dickCount, setDickCount] = useState(null)
+      , [goalsAccess, setGoalAccess] = useState('0')
 
   const [goalTitle, setGoalTitle] = useState('')
       , [goalCount, setGoalCount] = useState('')
@@ -325,7 +326,8 @@ const ControllLink = () => {
         title,
         pic,
         symbolType,
-        symbolVisible
+        symbolVisible,
+        goalsAccess
       })
     })
       .then(data => data.json())
@@ -366,6 +368,7 @@ const ControllLink = () => {
       <BlockTitle>Profile</BlockTitle>
       <Input value={title} onChange={({ target: { value } }) => setTitle(value)} placeholder='Title' />
       <Input value={pic} onChange={({ target: { value } }) => setPic(value)} placeholder='Picture url' />
+      <Input value={goalsAccess} onChange={({ target: { value } }) => setGoalAccess(value)} placeholder='Goal access' />
       <Wrapper>
         <BigButton style={{ marginRight: '20px' }} onClick={() => setSymbolType('dick')}>Dick {symbolType === 'dick' ? '✅' : '❌'}</BigButton>
         <BigButton onClick={() => setSymbolType('heart')}>Heart {symbolType === 'heart' ? '✅' : '❌'}</BigButton>
