@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import BigNumber from 'bignumber.js'
+import useLocalStorage from 'use-local-storage'
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import DicksCounter from './../components/dicks-counter'
@@ -112,7 +113,6 @@ const ContentTitle = styled.div`
   line-height: 26px;
   color: #FFFFFF;
   text-shadow: 0px 0px 1px rgba(94, 94, 94, 0.5);
-  max-width: 686px;
   width: calc(100% - 20px);
 `
 
@@ -121,6 +121,7 @@ const GoalWrapper = styled.div`
   flex-wrap: wrap;
   align-items: center;
   max-width: 686px;
+  width: 100%;
   width: calc(100% - 20px);
   padding: 20px 20px 10px 20px;
   box-sizing: border-box;
@@ -232,6 +233,31 @@ const GoalProgressPin = (() => {
   }
 })()
 
+const LocalGoalProgressPin = (() => {
+  const Body = styled.div`
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 400;
+    padding: 10px 20px;
+    border-radius: 15px;
+    background: #fff;
+    user-select: none;
+    margin-bottom: 10px;
+  `
+
+  return ({ localDicks, symbolType }) => {
+    const isRemained = localDicks > 1000
+
+    if (isRemained) {
+      window.location.reload()
+    }
+
+    return (
+      <Body>{isRemained ? `Available for viewing` : `Media access: ${1000 - localDicks} ${symbolType}s`}</Body>
+    )
+  }
+})()
+
 const Wrapper = styled.div`
   margin-top: 50px;
 
@@ -242,7 +268,7 @@ const Wrapper = styled.div`
   }
 `
 
-const Symbol = (props) => {
+const Symbol = () => {
   const location = useLocation()
   const navigate = useNavigate()
 
@@ -252,6 +278,8 @@ const Symbol = (props) => {
 
   const [dickCount, setDickCount] = useState('1')
       , [_, setLocalDickCount] = useState(1)
+
+  const [dicksSymbolAccess, setDicksSymbolAccess] = useLocalStorage(`dfa-${symbolName}`, 0) // minimalForAccess
 
   useEffect(() => {
     const timeId = setTimeout(() => {
@@ -329,6 +357,7 @@ const Symbol = (props) => {
             symbolType={symbol.symbolType}
             dickCount={dickCount}
             onDick={x => {
+              setDicksSymbolAccess(s => s + x)
               setLocalDickCount(s => s + x)
             }}
           />
@@ -370,10 +399,11 @@ const Symbol = (props) => {
                                 : (
                                   <PhotoPin
                                     key={i}
-                                    onClick={() => window.open(data, '_blank')}
+                                    onClick={() => dicksSymbolAccess < 1000 ? '' : window.open(data, '_blank')}
                                     style={{
                                       marginRight: i % 2 === 0 ? '10px' : '0px',
-                                      marginBottom: '10px'
+                                      marginBottom: '10px',
+                                      filter: `blur(${dicksSymbolAccess < 1000 ? '10px' : '0px'})`
                                     }}
                                     isOnce={goal[goal.type].length === 1}
                                     src={data}
@@ -405,17 +435,30 @@ const Symbol = (props) => {
           {
             showGoals.length > 0
               ? (
-                <BlockTitle>Activated</BlockTitle>
+                <BlockTitle>Goals activated</BlockTitle>
               )
               : (
                 null
               )
           }
           {
-              showGoals.map(goal => (
+              showGoals.map((goal, i) => (
                 <GoalWrapper key={goal.title+'-'+goal.date}>
                   <ContentTitle>{goal.title}</ContentTitle>
-                  <ContentWrapper>
+                  <ContentWrapper style={{ marginTop: (goal.type === 'photo' && dicksSymbolAccess < 1000) ? '20px' : '0px' }}>
+                    {
+                      goal.type === 'photo' && dicksSymbolAccess < 1000
+                        ? (
+                          <>
+                            <GoalPin>Pined {goal[goal.type].length} {goal.type}{goal[goal.type].length > 1 ? 's': ''}</GoalPin>
+                            <LocalGoalProgressPin localDicks={dicksSymbolAccess} symbolType={symbol.symbolType} />
+                          </>
+                        )
+                        : (
+                          null
+                        )
+                    }
+                    <ContentWrapper>
                     {
                       goal.show
                         ? (
@@ -432,10 +475,11 @@ const Symbol = (props) => {
                               : (
                                 <PhotoPin
                                   key={i}
-                                  onClick={() => window.open(data, '_blank')}
+                                  onClick={() => dicksSymbolAccess < 1000 ? '' : window.open(data, '_blank')}
                                   style={{
-                                    marginRight: i % 2 === 0 ? goal[goal.type].length === 1 ? '0px' : '10px' : '0px',
-                                    marginBottom: '10px'
+                                    marginRight: i % 2 === 0 ? goal[goal.type].length === 1 ? '0px' : '5px' : '0px',
+                                    marginBottom: '10px',
+                                    filter: `blur(${dicksSymbolAccess < 1000 ? '10px' : '0px'})`
                                   }}
                                   isOnce={goal[goal.type].length === 1}
                                   src={data}
@@ -450,6 +494,7 @@ const Symbol = (props) => {
                           </>
                         )
                     }
+                    </ContentWrapper>
                   </ContentWrapper>
                 </GoalWrapper>
               ))
