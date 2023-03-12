@@ -284,7 +284,7 @@ const ControllLink = () => {
       , [symbolType, setSymbolType] = useState('dick')
       , [symbolVisible, setSymbolVisible] = useState(true)
       , [dickCount, setDickCount] = useState(null)
-      , [goalsAccess, setGoalAccess] = useState('0')
+      , [goalsAccess, setGoalAccess] = useState('')
 
   const [goalTitle, setGoalTitle] = useState('')
       , [goalCount, setGoalCount] = useState('')
@@ -305,6 +305,7 @@ const ControllLink = () => {
           setUsername(data.username)
           setDickCount(data.dicks)
           setSymbolVisible(data.symbolVisible)
+          goalsAccess(data.goalsAccess)
         } else {
           window.pageAnimationRouter({ from: 0, to: 1 })
           navigate('/create')
