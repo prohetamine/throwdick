@@ -339,52 +339,68 @@ const Symbol = (props) => {
               ? (
                 <BlockTitle>Goals</BlockTitle>
               )
-              : (
-                null
-              )
+              : showGoals.length > 0
+                  ? (
+                    <BlockTitle>Goals</BlockTitle>
+                  )
+                  : (
+                    null
+                  )
           }
           {
-              progressGoals.map(goal => (
-                <GoalWrapper key={goal.title+'-'+goal.date}>
-                  <ContentTitle>{goal.title}</ContentTitle>
-                  <ContentWrapper>
-                    {
-                      goal.show
-                        ? (
-                          goal[goal.type].map((data, i) => (
-                            goal.type === 'link'
-                              ? (
-                                <LinkPin
-                                  key={i}
-                                  url={data.url}
-                                  color={data.color}
-                                  title={data.name}
-                                />
-                              )
-                              : (
-                                <PhotoPin
-                                  key={i}
-                                  onClick={() => window.open(data, '_blank')}
-                                  style={{
-                                    marginRight: i % 2 === 0 ? '10px' : '0px',
-                                    marginBottom: '10px'
-                                  }}
-                                  isOnce={goal[goal.type].length === 1}
-                                  src={data}
-                                />
-                              )
-                          ))
-                        )
-                        : (
-                          <>
-                            <GoalPin>Pined {goal[goal.type].length} {goal.type}{goal[goal.type].length > 1 ? 's': ''}</GoalPin>
-                            <GoalProgressPin request={goal.count} current={dickCount} symbolType={symbol.symbolType} />
-                          </>
-                        )
-                    }
-                  </ContentWrapper>
-                </GoalWrapper>
-              ))
+            progressGoals.length > 0
+              ? (
+                progressGoals.map(goal => (
+                  <GoalWrapper key={goal.title+'-'+goal.date}>
+                    <ContentTitle>{goal.title}</ContentTitle>
+                    <ContentWrapper>
+                      {
+                        goal.show
+                          ? (
+                            goal[goal.type].map((data, i) => (
+                              goal.type === 'link'
+                                ? (
+                                  <LinkPin
+                                    key={i}
+                                    url={data.url}
+                                    color={data.color}
+                                    title={data.name}
+                                  />
+                                )
+                                : (
+                                  <PhotoPin
+                                    key={i}
+                                    onClick={() => window.open(data, '_blank')}
+                                    style={{
+                                      marginRight: i % 2 === 0 ? '10px' : '0px',
+                                      marginBottom: '10px'
+                                    }}
+                                    isOnce={goal[goal.type].length === 1}
+                                    src={data}
+                                  />
+                                )
+                            ))
+                          )
+                          : (
+                            <>
+                              <GoalPin>Pined {goal[goal.type].length} {goal.type}{goal[goal.type].length > 1 ? 's': ''}</GoalPin>
+                              <GoalProgressPin request={goal.count} current={dickCount} symbolType={symbol.symbolType} />
+                            </>
+                          )
+                      }
+                    </ContentWrapper>
+                  </GoalWrapper>
+                ))
+              )
+              : showGoals.length > 0
+                  ? (
+                    <GoalWrapper>
+                      <ContentTitle>The symbol has not yet provided goals, but you can still hold it by throwing more {symbol.symbolType}s {symbol.symbolType === 'dick' ? '🍆' : '❤️'}</ContentTitle>
+                    </GoalWrapper>
+                  )
+                  : (
+                    null
+                  )
           }
           {
             showGoals.length > 0
