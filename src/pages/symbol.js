@@ -447,18 +447,18 @@ const Symbol = () => {
                   <ContentTitle>{goal.title}</ContentTitle>
                   <ContentWrapper style={{ marginTop: dicksSymbolAccess < symbol.goalsAccess ? '20px' : '0px' }}>
                     {
-                      dicksSymbolAccess < symbol.goalsAccess
+                      (new BigNumber(symbol.goalsAccess)).isGreaterThan(new BigNumber(dicksSymbolAccess))
                         ? (
                           <>
                             <GoalPin>Pined {goal[goal.type].length} {goal.type}{goal[goal.type].length > 1 ? 's': ''}</GoalPin>
-                            <LocalGoalProgressPin remains={symbol.goalsAccess - dicksSymbolAccess} symbolType={symbol.symbolType} />
+                            <LocalGoalProgressPin remains={(new BigNumber(symbol.goalsAccess)).minus(dicksSymbolAccess).toFormat().split(',').join(' ')} symbolType={symbol.symbolType} />
                           </>
                         )
                         : (
                           null
                         )
                     }
-                    <ContentWrapper style={{ marginTop: dicksSymbolAccess < symbol.goalsAccess ? '10px' : '20px' }}>
+                    <ContentWrapper style={{ marginTop: (new BigNumber(symbol.goalsAccess)).isGreaterThan(new BigNumber(dicksSymbolAccess)) ? '10px' : '20px' }}>
                     {
                       goal.show
                         ? (
@@ -470,7 +470,7 @@ const Symbol = () => {
                                   url={data.url}
                                   color={data.color}
                                   title={data.name}
-                                  isClickable={dicksSymbolAccess > symbol.goalsAccess}
+                                  isClickable={(new BigNumber(symbol.goalsAccess)).isGreaterThan(new BigNumber(dicksSymbolAccess))}
                                   style={{
                                     filter: `blur(${dicksSymbolAccess < symbol.goalsAccess ? '3px' : '0px'})`
                                   }}
@@ -479,11 +479,11 @@ const Symbol = () => {
                               : (
                                 <PhotoPin
                                   key={i}
-                                  onClick={() => dicksSymbolAccess < symbol.goalsAccess ? '' : window.open(data, '_blank')}
+                                  onClick={() => (new BigNumber(symbol.goalsAccess)).isGreaterThan(new BigNumber(dicksSymbolAccess)) ? '' : window.open(data, '_blank')}
                                   style={{
                                     marginRight: i % 2 === 0 ? goal[goal.type].length === 1 ? '0px' : '5px' : '0px',
                                     marginBottom: '10px',
-                                    filter: `blur(${dicksSymbolAccess < symbol.goalsAccess ? '10px' : '0px'})`
+                                    filter: `blur(${(new BigNumber(symbol.goalsAccess)).isGreaterThan(new BigNumber(dicksSymbolAccess)) ? '10px' : '0px'})`
                                   }}
                                   isOnce={goal[goal.type].length === 1}
                                   src={data}
