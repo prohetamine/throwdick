@@ -170,7 +170,7 @@ const LinkPin = (() => {
     margin-bottom: 10px;
   `
 
-  return ({ url, color, title }) => {
+  return ({ url, color, title, style, isClickable }) => {
     const [dicks, setDicks] = useState(false)
 
     useEffect(() => {
@@ -185,9 +185,9 @@ const LinkPin = (() => {
     }, [url])
 
     return dicks ? (
-      <Body target='_blank' href={url} color={color}>{title} ({dicks})</Body>
+      <Body style={style} target='_blank' onClick={e => isClickable ? '' : e.preventDefault()} href={isClickable ? url : '/#/hidden'} color={color}>{title} ({dicks})</Body>
     ) : (
-      <Body target='_blank' href={url} color={color}>{title}</Body>
+      <Body style={style} target='_blank' onClick={e => isClickable ? '' : e.preventDefault()} href={isClickable ? url : '/#/hidden'} color={color}>{title}</Body>
     )
   }
 })()
@@ -273,7 +273,7 @@ const Symbol = () => {
   const [dickCount, setDickCount] = useState('1')
       , [_, setLocalDickCount] = useState(1)
 
-  const [dicksSymbolAccess, setDicksSymbolAccess] = useLocalStorage(`dfa-${symbolName}`, 0) // minimalForAccess
+  const [dicksSymbolAccess, setDicksSymbolAccess] = useLocalStorage(`dfa-${symbolName}`, 0)
 
   useEffect(() => {
     const timeId = setTimeout(() => {
@@ -390,6 +390,10 @@ const Symbol = () => {
                                     url={data.url}
                                     color={data.color}
                                     title={data.name}
+                                    isClickable={dicksSymbolAccess > symbol.goalsAccess}
+                                    style={{
+                                      filter: `blur(${dicksSymbolAccess < symbol.goalsAccess ? '3px' : '0px'})`
+                                    }}
                                   />
                                 )
                                 : (
@@ -441,9 +445,9 @@ const Symbol = () => {
               showGoals.map((goal, i) => (
                 <GoalWrapper key={goal.title+'-'+goal.date}>
                   <ContentTitle>{goal.title}</ContentTitle>
-                  <ContentWrapper style={{ marginTop: (goal.type === 'photo' && dicksSymbolAccess < symbol.goalsAccess) ? '20px' : '0px' }}>
+                  <ContentWrapper style={{ marginTop: dicksSymbolAccess < symbol.goalsAccess ? '20px' : '0px' }}>
                     {
-                      goal.type === 'photo' && dicksSymbolAccess < symbol.goalsAccess
+                      dicksSymbolAccess < symbol.goalsAccess
                         ? (
                           <>
                             <GoalPin>Pined {goal[goal.type].length} {goal.type}{goal[goal.type].length > 1 ? 's': ''}</GoalPin>
@@ -454,7 +458,7 @@ const Symbol = () => {
                           null
                         )
                     }
-                    <ContentWrapper>
+                    <ContentWrapper style={{ marginTop: dicksSymbolAccess < symbol.goalsAccess ? '10px' : '20px' }}>
                     {
                       goal.show
                         ? (
@@ -466,6 +470,10 @@ const Symbol = () => {
                                   url={data.url}
                                   color={data.color}
                                   title={data.name}
+                                  isClickable={dicksSymbolAccess > symbol.goalsAccess}
+                                  style={{
+                                    filter: `blur(${dicksSymbolAccess < symbol.goalsAccess ? '3px' : '0px'})`
+                                  }}
                                 />
                               )
                               : (
