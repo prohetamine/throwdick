@@ -246,14 +246,14 @@ const LocalGoalProgressPin = (() => {
   `
 
   return ({ localDicks, symbolType }) => {
-    const isRemained = localDicks > 1000
+    const isRemained = localDicks > 500
 
     if (isRemained) {
       window.location.reload()
     }
 
     return (
-      <Body>{isRemained ? `Available for viewing` : `Media access: ${1000 - localDicks} ${symbolType}s`}</Body>
+      <Body>{isRemained ? `Available for viewing` : `Media access for you: ${500 - localDicks} ${symbolType}s`}</Body>
     )
   }
 })()
@@ -399,11 +399,11 @@ const Symbol = () => {
                                 : (
                                   <PhotoPin
                                     key={i}
-                                    onClick={() => dicksSymbolAccess < 1000 ? '' : window.open(data, '_blank')}
+                                    onClick={() => dicksSymbolAccess < 500 ? '' : window.open(data, '_blank')}
                                     style={{
                                       marginRight: i % 2 === 0 ? '10px' : '0px',
                                       marginBottom: '10px',
-                                      filter: `blur(${dicksSymbolAccess < 1000 ? '10px' : '0px'})`
+                                      filter: `blur(${dicksSymbolAccess < 500 ? '10px' : '0px'})`
                                     }}
                                     isOnce={goal[goal.type].length === 1}
                                     src={data}
@@ -445,9 +445,9 @@ const Symbol = () => {
               showGoals.map((goal, i) => (
                 <GoalWrapper key={goal.title+'-'+goal.date}>
                   <ContentTitle>{goal.title}</ContentTitle>
-                  <ContentWrapper style={{ marginTop: (goal.type === 'photo' && dicksSymbolAccess < 1000) ? '20px' : '0px' }}>
+                  <ContentWrapper style={{ marginTop: (goal.type === 'photo' && dicksSymbolAccess < 500) ? '20px' : '0px' }}>
                     {
-                      goal.type === 'photo' && dicksSymbolAccess < 1000
+                      goal.type === 'photo' && dicksSymbolAccess < 500
                         ? (
                           <>
                             <GoalPin>Pined {goal[goal.type].length} {goal.type}{goal[goal.type].length > 1 ? 's': ''}</GoalPin>
@@ -475,11 +475,11 @@ const Symbol = () => {
                               : (
                                 <PhotoPin
                                   key={i}
-                                  onClick={() => dicksSymbolAccess < 1000 ? '' : window.open(data, '_blank')}
+                                  onClick={() => dicksSymbolAccess < 500 ? '' : window.open(data, '_blank')}
                                   style={{
                                     marginRight: i % 2 === 0 ? goal[goal.type].length === 1 ? '0px' : '5px' : '0px',
                                     marginBottom: '10px',
-                                    filter: `blur(${dicksSymbolAccess < 1000 ? '10px' : '0px'})`
+                                    filter: `blur(${dicksSymbolAccess < 500 ? '10px' : '0px'})`
                                   }}
                                   isOnce={goal[goal.type].length === 1}
                                   src={data}
