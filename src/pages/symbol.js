@@ -395,7 +395,7 @@ const Symbol = (props) => {
               : showGoals.length > 0
                   ? (
                     <GoalWrapper>
-                      <ContentTitle>The symbol has not yet provided goals, but you can still hold it by throwing more {symbol.symbolType}s {symbol.symbolType === 'dick' ? '🍆' : '❤️'}</ContentTitle>
+                      <ContentTitle style={{ marginBottom: '10px' }}>The symbol has not yet provided goals, but you can still hold it by throwing more {symbol.symbolType}s {symbol.symbolType === 'dick' ? '🍆' : '❤️'}</ContentTitle>
                     </GoalWrapper>
                   )
                   : (
