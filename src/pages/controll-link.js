@@ -118,6 +118,22 @@ const UserListLoad = styled.img`
   -ms-user-select: none;
 `
 
+const BlockTitleSmile = styled.div`
+  user-select: none;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 23px;
+  line-height: 26px;
+  color: #FFFFFF;
+  margin-bottom: 10px;
+  margin-left: 20px;
+  margin-right: 10px;
+  text-shadow: 0px 0px 1px rgba(94, 94, 94, 0.5);
+  max-width: 686px;
+  width: calc(100% - 20px);
+`
+
 const BlockTitle = styled.div`
   user-select: none;
   font-family: Roboto;
@@ -382,24 +398,33 @@ const ControllLink = () => {
         This is a permanent link to your symbol, only with it you will be able to access editing again, save it so as not to lose it
       </DescriptionWrapper>
       <UserListLoad src={loader} />
-      <BlockTitle>Profile</BlockTitle>
+      <BlockTitle>Symbol settings</BlockTitle>
+      <BlockTitleSmile style={{ marginTop: '25px' }}>Title</BlockTitleSmile>
       <Input value={title} onChange={({ target: { value } }) => setTitle(value)} placeholder='Title' />
+      <BlockTitleSmile>Picture</BlockTitleSmile>
       <Input value={pic} onChange={({ target: { value } }) => setPic(value)} placeholder='Picture url (use imgur.com or etc)' />
+      <BlockTitleSmile>Required amount of {symbolType}s to access the content</BlockTitleSmile>
       <Input value={goalsAccess} onChange={({ target: { value } }) => setGoalAccess(value)} placeholder='Goal access' />
+      <BlockTitleSmile>Type</BlockTitleSmile>
       <Wrapper>
         <BigButton style={{ marginRight: '20px' }} onClick={() => setSymbolType('dick')}>Dick {symbolType === 'dick' ? '✅' : '❌'}</BigButton>
         <BigButton onClick={() => setSymbolType('heart')}>Heart {symbolType === 'heart' ? '✅' : '❌'}</BigButton>
       </Wrapper>
+      <BlockTitleSmile>Visible (profile display in search and link availability)</BlockTitleSmile>
       <Wrapper>
-        <BigButton onClick={() => setSymbolVisible(s => !s)}>Visible profile {symbolVisible ? '✅' : '❌'}</BigButton>
+        <BigButton onClick={() => setSymbolVisible(s => !s)}>{symbolVisible ? '✅' : '❌'}</BigButton>
       </Wrapper>
+      <BlockTitleSmile style={{ marginTop: '20px' }}></BlockTitleSmile>
       <Wrapper>
         <BigButton style={{ marginRight: '20px' }} onClick={() => saveSymbol()}>Update symbol</BigButton>
         <BigButton onClick={() => window.open(window.location.origin+'#/'+username)}>Open symbol</BigButton>
       </Wrapper>
-      <BlockTitle>Goal</BlockTitle>
+      <BlockTitle>Create goal</BlockTitle>
+      <BlockTitleSmile style={{ marginTop: '25px' }}>Title (visible to everyone)</BlockTitleSmile>
       <Input value={goalTitle} onChange={({ target: { value } }) => setGoalTitle(value)} placeholder='Title' />
+      <BlockTitleSmile>The number of {symbolType}s to collect</BlockTitleSmile>
       <Input value={goalCount} onChange={({ target: { value } }) => setGoalCount(value)} placeholder={`${symbolType}s count`} />
+      <BlockTitleSmile>Type content</BlockTitleSmile>
       <Wrapper>
         <BigButton
           onClick={() => {
@@ -415,6 +440,7 @@ const ControllLink = () => {
           }}
         >Link {goalType === 'link' ? '✅' : '❌'}</BigButton>
       </Wrapper>
+      <BlockTitleSmile>Add links or photos</BlockTitleSmile>
       <Wrapper>
         <BigButton onClick={() => setGoalContent(s => [...s, goalType === 'photo' ? '' : { name: '', url: '', color: '#f72626' }])}>Create {goalType} +</BigButton>
       </Wrapper>
@@ -444,6 +470,7 @@ const ControllLink = () => {
           </Wrapper>
         ))
       }
+      <BlockTitleSmile style={{ marginTop: '20px' }}></BlockTitleSmile>
       <Wrapper>
         <BigButton
           onClick={() => {
@@ -459,21 +486,10 @@ const ControllLink = () => {
                 }
               ]
             )
+            saveSymbol()
           }}
           style={{ marginRight: '20px' }}
-        >Add goal</BigButton>
-        <BigButton
-          onClick={() => {
-            setGoalTitle('')
-            setGoalCount('')
-            setGoalType('link')
-            setGoalContent([])
-          }}
-        >Clear goal</BigButton>
-      </Wrapper>
-      <Wrapper>
-        <BigButton style={{ marginRight: '20px' }} onClick={() => saveSymbol()}>Update goals</BigButton>
-        <BigButton onClick={() => window.open(window.location.origin+'#/'+username)}>Open symbol</BigButton>
+        >Push goal to list</BigButton>
       </Wrapper>
       {
         progressGoals.length > 0
