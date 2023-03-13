@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useNavigate, useLocation } from 'react-router-dom'
 import loader from './../assets/loader.svg'
+import { motion } from 'framer-motion'
 import BigNumber from 'bignumber.js'
 
 import Body from './../components/body'
@@ -30,6 +31,28 @@ const DescriptionWrapper = styled.div`
   backdrop-filter: blur(10px);
   text-shadow: 0px 0px 1px rgba(94, 94, 94, 0.5);
   box-shadow: 0px 0px 1px rgba(94, 94, 94, 0.5);
+`
+
+const WrapperAnimation = styled(motion.div)`
+  position: fixed;
+  left: 10px;
+  bottom: 10px;
+`
+
+const Updater = styled(motion.div)`
+  user-select: none;
+  height: 46px;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  overflow: hidden;
+  border-radius: 100px;
+  background-color: #fff;
+  color: #000;
+  cursor: pointer;
+  filter: drop-shadow(0px 0px 1px rgba(94, 94, 94, 0.5));
 `
 
 const Input = styled.input`
@@ -297,6 +320,9 @@ const ControllLink = () => {
       , [symbolVisible, setSymbolVisible] = useState(true)
       , [dickCount, setDickCount] = useState(null)
       , [goalsAccess, setGoalAccess] = useState('')
+      , [isLoad, setLoad] = useState(false)
+      , [isUpdateAction, setUpdateAction] = useState(false)
+      , [isUpdateStatus, setUpdateStatus] = useState(false)
 
   const [goalTitle, setGoalTitle] = useState('')
       , [goalCount, setGoalCount] = useState('')
@@ -318,6 +344,7 @@ const ControllLink = () => {
           setDickCount(data.dicks)
           setSymbolVisible(data.symbolVisible)
           setGoalAccess(data.goalsAccess)
+          setLoad(true)
         } else {
           window.pageAnimationRouter({ from: 0, to: 1 })
           navigate('/create')
@@ -335,7 +362,7 @@ const ControllLink = () => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        goals: goals,
+        goals,
         title,
         pic,
         symbolType,
@@ -347,6 +374,49 @@ const ControllLink = () => {
       .then(data => alert('Symbol updated'))
       .catch(data => alert('Symbol updated error'))
   }
+
+  useEffect(() => {
+    if (isLoad) {
+      const timeId = setTimeout(() => {
+        const controllLink = location.pathname.replace(/\/cl\//, '')
+
+        fetch(`${window.host}/set-symbol/${controllLink}`, {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            goals,
+            title,
+            pic,
+            symbolType,
+            symbolVisible,
+            goalsAccess
+          })
+        })
+          .then(data => data.json())
+          .then(data => {
+            setUpdateAction(true)
+            setUpdateStatus('Updated')
+
+            setTimeout(() => {
+              setUpdateAction(false)
+            }, 2000)
+          })
+          .catch(data => {
+            setUpdateAction(true)
+            setUpdateStatus('Updated error')
+
+            setTimeout(() => {
+              setUpdateAction(false)
+            }, 2000)
+          })
+      }, 3000)
+
+      return () => clearTimeout(timeId)
+    }
+  }, [isLoad, location, goals, title, pic, symbolType, symbolVisible, goalsAccess])
 
   const progressGoals = goals.filter(g => !g.show).sort((a, b) => (new BigNumber(a.count)).minus(new BigNumber(b.count))).sort((a, b) => b.date - a.date).sort((a, b) => !!b.pinned - !!a.pinned)
 
@@ -374,6 +444,9 @@ const ControllLink = () => {
           left: '10px'
         }}
       />
+      <WrapperAnimation>
+        <Updater animate={{ y: isUpdateAction ? '0px' : '100px' }}>{isUpdateStatus} {isUpdateStatus === 'Updated' ? '👍' : '😭'}</Updater>
+      </WrapperAnimation>
       <DescriptionWrapper>
         Fill out your profile, set goals and get into the search for the best positions!
       </DescriptionWrapper>
@@ -466,10 +539,6 @@ const ControllLink = () => {
                 }
               ]
             )
-
-            setTimeout(() => {
-              saveSymbol()
-            }, 3000)
           }}
           style={{ marginRight: '20px' }}
         >Push goal to list</BigButton>
@@ -520,22 +589,10 @@ const ControllLink = () => {
                         <GoalPin>Pined {goal[goal.type].length} {goal.type}{goal[goal.type].length > 1 ? 's': ''}</GoalPin>
                         <GoalProgressPin request={goal.count} current={dickCount} symbolType={symbolType} />
                         <GoalControll
-                          onClick={() => {
-                            setGoals(s => s.map(_goal => goal.date === _goal.date ? ({ ..._goal, pinned: !_goal.pinned }) : _goal))
-
-                            setTimeout(() => {
-                              saveSymbol()
-                            }, 3000)
-                          }}
+                          onClick={() => setGoals(s => s.map(_goal => goal.date === _goal.date ? ({ ..._goal, pinned: !_goal.pinned }) : _goal))}
                         >{!!goal.pinned ? 'UNPINNED' : 'PINNED'}</GoalControll>
                         <GoalControll
-                          onClick={() => {
-                            setGoals(s => s.filter(_goal => goal.date !== _goal.date))
-
-                            setTimeout(() => {
-                              saveSymbol()
-                            }, 3000)
-                          }}
+                          onClick={() => setGoals(s => s.filter(_goal => goal.date !== _goal.date))}
                         >REMOVE GOAL</GoalControll>
                       </>
                     )
