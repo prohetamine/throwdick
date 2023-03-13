@@ -221,14 +221,15 @@ const GoalProgressPin = (() => {
   return ({ request, current, symbolType, localDickCount }) => {
     const remains = (new BigNumber(request)).minus(current).minus(localDickCount).toFormat().split(',').join(' ')
 
-    const isRemained = (remains + localDickCount).match('-')
+    const isRemainedReload = (new BigNumber(remains)).plus(localDickCount).toFormat().match('-')
+    const isRemained = remains.match('-')
 
-    if (isRemained) {
+    if (isRemainedReload) {
       window.location.reload()
     }
 
     return (
-      <Body>{isRemained ? `Available for viewing` : `Will become visible via: ${remains} ${symbolType}`}</Body>
+      <Body>{isRemained ? `Available for viewing (Wait loading...)` : `Will become visible via: ${remains} ${symbolType}`}</Body>
     )
   }
 })()
