@@ -218,8 +218,8 @@ const GoalProgressPin = (() => {
     margin-bottom: 10px;
   `
 
-  return ({ request, current, symbolType }) => {
-    const remains = (new BigNumber(request)).minus(current).toFormat().split(',').join(' ')
+  return ({ request, current, symbolType, localDickCount }) => {
+    const remains = (new BigNumber(request)).minus(current).minus(localDickCount).toFormat().split(',').join(' ')
 
     const isRemained = remains.match('-')
 
@@ -271,7 +271,7 @@ const Symbol = () => {
   const [symbol, setSymbol] = useState(null)
 
   const [dickCount, setDickCount] = useState('1')
-      , [_, setLocalDickCount] = useState(1)
+      , [localDickCount, setLocalDickCount] = useState(1)
 
   const [dicksSymbolAccess, setDicksSymbolAccess] = useLocalStorage(`dfa-${symbolName}`, 0)
 
@@ -299,12 +299,15 @@ const Symbol = () => {
         if (s !== 0) {
           fetch(`${window.host}/add-dicks-for/${symbolName}?c=${s}`)
             .then(data => data.json())
-            .then(data => setDickCount(data[0]))
+            .then(data => {
+              setLocalDickCount(s => 0)
+              setDickCount(data[0])
+            })
         }
-
-        return 0
+        
+        return s
       })
-    }, 5000)
+    }, 10000)
 
     return () => clearInterval(intervalId)
   }, [symbolName])
@@ -425,7 +428,7 @@ const Symbol = () => {
                           : (
                             <>
                               <GoalPin>Pined {goal[goal.type].length} {goal.type}{goal[goal.type].length > 1 ? 's': ''}</GoalPin>
-                              <GoalProgressPin request={goal.count} current={dickCount} symbolType={symbol.symbolType} />
+                              <GoalProgressPin request={goal.count} current={dickCount} localDickCount={localDickCount} symbolType={symbol.symbolType} />
                             </>
                           )
                       }
