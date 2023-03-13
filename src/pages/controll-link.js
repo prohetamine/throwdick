@@ -346,7 +346,8 @@ const ControllLink = () => {
       })
     })
       .then(data => data.json())
-      .then(data => console.log(data))
+      .then(data => alert('Symbol updated'))
+      .catch(data => alert('Symbol updated error'))
   }
 
   const progressGoals = goals.filter(g => !g.show).sort((a, b) => (new BigNumber(a.count)).minus(new BigNumber(b.count))).sort((a, b) => b.date - a.date).sort((a, b) => !!b.pinned - !!a.pinned)
@@ -486,7 +487,10 @@ const ControllLink = () => {
                 }
               ]
             )
-            saveSymbol()
+
+            setTimeout(() => {
+              saveSymbol()
+            }, 3000)
           }}
           style={{ marginRight: '20px' }}
         >Push goal to list</BigButton>
@@ -539,13 +543,19 @@ const ControllLink = () => {
                         <GoalControll
                           onClick={() => {
                             setGoals(s => s.map(_goal => goal.date === _goal.date ? ({ ..._goal, pinned: !_goal.pinned }) : _goal))
-                            saveSymbol()
+
+                            setTimeout(() => {
+                              saveSymbol()
+                            }, 3000)
                           }}
                         >{!!goal.pinned ? 'UNPINNED' : 'PINNED'}</GoalControll>
                         <GoalControll
                           onClick={() => {
                             setGoals(s => s.filter(_goal => goal.date !== _goal.date))
-                            saveSymbol()
+
+                            setTimeout(() => {
+                              saveSymbol()
+                            }, 3000)
                           }}
                         >REMOVE GOAL</GoalControll>
                       </>
