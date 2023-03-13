@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
@@ -55,8 +55,7 @@ const CopyText = styled(motion.div)`
   margin-right: 12px;
 `
 
-const CopyButton = (props) => {
-  const ref = useRef()
+const CopyButton = () => {
   const [isActive, setActive] = useState(false)
   const [isCopy, setCopy] = useState(false)
 
@@ -70,7 +69,6 @@ const CopyButton = (props) => {
       }}
     >
       <Button
-        ref={ref}
         whileTap={{ scale: 0.9 }}
         onHoverStart={() => setActive(true)}
         onHoverEnd={() => setActive(false)}
