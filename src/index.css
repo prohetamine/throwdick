@@ -32,6 +32,26 @@ html, body {
   left: 0px;
 }
 
+.update {
+  user-select: none;
+  height: 46px;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  overflow: hidden;
+  border-radius: 100px;
+  background-color: #fff;
+  color: #000;
+  cursor: pointer;
+  position: fixed;
+  bottom: 100px;
+  left: 10px;
+  filter: drop-shadow(0px 0px 1px rgba(94, 94, 94, 0.5));
+  transition: 0.5s;
+}
+
 canvas {
   margin-top: -200px;
   transform: scale(80%);

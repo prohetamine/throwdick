@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useNavigate, useLocation } from 'react-router-dom'
 import loader from './../assets/loader.svg'
-import { motion } from 'framer-motion'
 import BigNumber from 'bignumber.js'
 
 import Body from './../components/body'
@@ -31,28 +30,6 @@ const DescriptionWrapper = styled.div`
   backdrop-filter: blur(10px);
   text-shadow: 0px 0px 1px rgba(94, 94, 94, 0.5);
   box-shadow: 0px 0px 1px rgba(94, 94, 94, 0.5);
-`
-
-const WrapperAnimation = styled(motion.div)`
-  position: fixed;
-  left: 10px;
-  bottom: 10px;
-`
-
-const Updater = styled(motion.div)`
-  user-select: none;
-  height: 46px;
-  padding: 10px 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  overflow: hidden;
-  border-radius: 100px;
-  background-color: #fff;
-  color: #000;
-  cursor: pointer;
-  filter: drop-shadow(0px 0px 1px rgba(94, 94, 94, 0.5));
 `
 
 const Input = styled.input`
@@ -321,8 +298,6 @@ const ControllLink = () => {
       , [dickCount, setDickCount] = useState(null)
       , [goalsAccess, setGoalAccess] = useState('')
       , [isLoad, setLoad] = useState(false)
-      , [isUpdateAction, setUpdateAction] = useState(false)
-      , [isUpdateStatus, setUpdateStatus] = useState(false)
 
   const [goalTitle, setGoalTitle] = useState('')
       , [goalCount, setGoalCount] = useState('')
@@ -397,19 +372,22 @@ const ControllLink = () => {
         })
           .then(data => data.json())
           .then(data => {
-            setUpdateAction(true)
-            setUpdateStatus('Updated')
+            const update = document.querySelector('.update')
+            update.style.bottom = '10px'
+            update.innerHTML = 'Updated 👍'
 
             setTimeout(() => {
-              setUpdateAction(false)
+              update.style.bottom = '-100px'
             }, 2000)
           })
           .catch(data => {
-            setUpdateAction(true)
-            setUpdateStatus('Updated error')
+            const update = document.querySelector('.update')
+
+            update.style.bottom = '10px'
+            update.innerHTML = 'Updated error 😭'
 
             setTimeout(() => {
-              setUpdateAction(false)
+              update.style.bottom = '-100px'
             }, 2000)
           })
       }, 3000)
@@ -444,9 +422,6 @@ const ControllLink = () => {
           left: '10px'
         }}
       />
-      <WrapperAnimation>
-        <Updater animate={{ y: isUpdateAction ? '0px' : '100px' }}>{isUpdateStatus} {isUpdateStatus === 'Updated' ? '👍' : '😭'}</Updater>
-      </WrapperAnimation>
       <DescriptionWrapper>
         Fill out your profile, set goals and get into the search for the best positions!
       </DescriptionWrapper>
