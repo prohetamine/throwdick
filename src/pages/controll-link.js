@@ -188,7 +188,7 @@ const GoalPin = styled.div`
   margin-right: 10px;
 `
 
-const GoalRemove = styled.div`
+const GoalControll = styled.div`
   font-family: Roboto;
   font-style: normal;
   font-weight: 400;
@@ -199,6 +199,7 @@ const GoalRemove = styled.div`
   user-select: none;
   margin-bottom: 10px;
   margin-right: 10px;
+  cursor: pointer;
 `
 
 const LinkPin = (() => {
@@ -504,7 +505,8 @@ const ControllLink = () => {
                       <>
                         <GoalPin>Pined {goal[goal.type].length} {goal.type}{goal[goal.type].length > 1 ? 's': ''}</GoalPin>
                         <GoalProgressPin request={goal.count} current={dickCount} symbolType={symbolType} />
-                        <GoalRemove onClick={() => setGoals(s => s.filter(_goal => goal.date !== _goal.date))}>REMOVE GOAL</GoalRemove>
+                        <GoalControll onClick={() => setGoals(s => s.filter(_goal => goal.date !== _goal.date))}>REMOVE GOAL</GoalControll>
+                        <GoalControll onClick={() => setGoals(s => s.map(_goal => goal.date === _goal.date ? ({ ..._goal, pinned: !_goal.pinned }) : _goal))}>{!!goal.pinned ? 'UNPINNED' : 'PINNED'}</GoalControll>
                       </>
                     )
                 }

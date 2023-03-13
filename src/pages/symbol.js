@@ -312,8 +312,9 @@ const Symbol = () => {
   const showGoals = symbol && symbol.goals
                       .filter(g => g.show)
                       .sort((a, b) => b.date - a.date)
+                      .sort((a, b) => !!b.pinned - !!a.pinned)
 
-  const progressGoals = symbol && symbol.goals.filter(g => !g.show).sort((a, b) => (new BigNumber(a.count)).minus(new BigNumber(b.count)))
+  const progressGoals = symbol && symbol.goals.filter(g => !g.show).sort((a, b) => (new BigNumber(a.count)).minus(new BigNumber(b.count))).sort((a, b) => !!b.pinned - !!a.pinned)
 
   return symbol ? (
     <Body
