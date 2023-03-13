@@ -336,7 +336,7 @@ const ControllLink = () => {
       .then(data => console.log(data))
   }
 
-  const progressGoals = goals.filter(g => !g.show).sort((a, b) => (new BigNumber(a.count)).minus(new BigNumber(b.count))).sort((a, b) => b.date - a.date)
+  const progressGoals = goals.filter(g => !g.show).sort((a, b) => (new BigNumber(a.count)).minus(new BigNumber(b.count))).sort((a, b) => b.date - a.date).sort((a, b) => !!b.pinned - !!a.pinned)
 
   return dickCount ? (
     <Body
