@@ -272,9 +272,13 @@ const Symbol = () => {
   const [symbol, setSymbol] = useState(null)
 
   const [dickCount, setDickCount] = useState('1')
-      , [localDickCount, setLocalDickCount] = useLocalStorage(`ldc-${symbolName}`, 1)
+      , [localDickCount, setLocalDickCount] = useLocalStorage(`ldc-${symbolName}`, 0)
 
   const [dicksSymbolAccess, setDicksSymbolAccess] = useLocalStorage(`dfa-${symbolName}`, 0)
+
+  useEffect(() => {
+    setLocalDickCount(1)
+  }, [])
 
   useEffect(() => {
     const timeId = setTimeout(() => {
