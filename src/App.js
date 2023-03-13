@@ -59,6 +59,19 @@ const App = () => {
     <AnimatePresence>
       <Routes location={location} key={location.pathname}>
         <Route
+          path='/'
+          element={
+            <PageBody
+              initial={initialFrom}
+              exit={exitTo}
+              animate={'current'}
+              variants={variants}
+            >
+              <Search />
+            </PageBody>
+          }
+        />
+        <Route
           path='/search'
           element={
             <PageBody
