@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { motion } from 'framer-motion'
 import loader from './../assets/loader.svg'
 import BigNumber from 'bignumber.js'
 
 import Body from './../components/body'
 import Button from './../components/button'
-import CopyButton from './../components/copy-button'
 
 const DescriptionWrapper = styled.div`
   cursor: pointer;
@@ -376,7 +374,6 @@ const ControllLink = () => {
           left: '10px'
         }}
       />
-      <CopyButton />
       <DescriptionWrapper>
         Fill out your profile, set goals and get into the search for the best positions!
       </DescriptionWrapper>
