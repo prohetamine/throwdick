@@ -346,8 +346,25 @@ const ControllLink = () => {
       })
     })
       .then(data => data.json())
-      .then(data => alert('Symbol updated'))
-      .catch(data => alert('Symbol updated error'))
+      .then(data => {
+        const update = document.querySelector('.update')
+        update.style.bottom = '10px'
+        update.innerHTML = 'Updated 👍'
+
+        setTimeout(() => {
+          update.style.bottom = '-100px'
+        }, 2000)
+      })
+      .catch(data => {
+        const update = document.querySelector('.update')
+
+        update.style.bottom = '10px'
+        update.innerHTML = 'Updated error 😭'
+
+        setTimeout(() => {
+          update.style.bottom = '-100px'
+        }, 2000)
+      })
   }
 
   useEffect(() => {
