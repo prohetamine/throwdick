@@ -272,7 +272,7 @@ const Symbol = () => {
   const [symbol, setSymbol] = useState(null)
 
   const [dickCount, setDickCount] = useState('1')
-      , [localDickCount, setLocalDickCount] = useLocalStorage(`ldc-${symbolName}`, 0)
+      , [localDickCount, setLocalDickCount] = useLocalStorage(`ldc-${symbolName}`, 1)
 
   const [dicksSymbolAccess, setDicksSymbolAccess] = useLocalStorage(`dfa-${symbolName}`, 0)
 
