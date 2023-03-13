@@ -181,7 +181,6 @@ const Search = () => {
     fetch(`${window.host}/find/-?${searchType === 'heart' ? 'isHeart=1' : ''}`)
       .then(data => data.json())
       .then(data => setSymbols(data))
-      .catch(e => alert(e.message))
   }, [])
 
   useEffect(() => {
