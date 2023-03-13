@@ -221,7 +221,7 @@ const GoalProgressPin = (() => {
   return ({ request, current, symbolType, localDickCount }) => {
     const remains = (new BigNumber(request)).minus(current).minus(localDickCount).toFormat().split(',').join(' ')
 
-    const isRemained = remains.match('-')
+    const isRemained = (remains + localDickCount).match('-')
 
     if (isRemained) {
       window.location.reload()
