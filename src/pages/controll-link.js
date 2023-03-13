@@ -328,6 +328,9 @@ const ControllLink = () => {
   }, [location])
 
   const saveSymbol = () => {
+    const update = document.querySelector('.update')
+    update.style.display = 'flex'
+    
     const controllLink = location.pathname.replace(/\/cl\//, '')
 
     fetch(`${window.host}/set-symbol/${controllLink}`, {
@@ -349,7 +352,6 @@ const ControllLink = () => {
       .then(data => {
         const update = document.querySelector('.update')
         update.style.bottom = '10px'
-        update.style.display = 'flex'
         update.innerHTML = 'Updated 👍'
 
         setTimeout(() => {
@@ -359,7 +361,6 @@ const ControllLink = () => {
       .catch(data => {
         const update = document.querySelector('.update')
         update.style.bottom = '10px'
-        update.style.display = 'flex'
         update.innerHTML = 'Updated error 😭'
 
         setTimeout(() => {
@@ -370,6 +371,9 @@ const ControllLink = () => {
 
   useEffect(() => {
     if (isLoad) {
+      const update = document.querySelector('.update')
+      update.style.display = 'flex'
+
       const timeId = setTimeout(() => {
         const controllLink = location.pathname.replace(/\/cl\//, '')
 
@@ -392,7 +396,6 @@ const ControllLink = () => {
           .then(data => {
             const update = document.querySelector('.update')
             update.style.bottom = '10px'
-            update.style.display = 'flex'
             update.innerHTML = 'Updated 👍'
 
             setTimeout(() => {
@@ -402,7 +405,6 @@ const ControllLink = () => {
           .catch(data => {
             const update = document.querySelector('.update')
             update.style.bottom = '10px'
-            update.style.display = 'flex'
             update.innerHTML = 'Updated error 😭'
 
             setTimeout(() => {
