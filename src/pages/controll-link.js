@@ -505,8 +505,8 @@ const ControllLink = () => {
                       <>
                         <GoalPin>Pined {goal[goal.type].length} {goal.type}{goal[goal.type].length > 1 ? 's': ''}</GoalPin>
                         <GoalProgressPin request={goal.count} current={dickCount} symbolType={symbolType} />
-                        <GoalControll onClick={() => setGoals(s => s.filter(_goal => goal.date !== _goal.date))}>REMOVE GOAL</GoalControll>
                         <GoalControll onClick={() => setGoals(s => s.map(_goal => goal.date === _goal.date ? ({ ..._goal, pinned: !_goal.pinned }) : _goal))}>{!!goal.pinned ? 'UNPINNED' : 'PINNED'}</GoalControll>
+                        <GoalControll onClick={() => setGoals(s => s.filter(_goal => goal.date !== _goal.date))}>REMOVE GOAL</GoalControll>
                       </>
                     )
                 }
