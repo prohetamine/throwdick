@@ -10,6 +10,7 @@ import Search from './pages/search'
 import Create from './pages/create'
 import ControllLink from './pages/controll-link'
 import Manager from './pages/manager'
+import Error from './components/error'
 
 const PageBody = styled(motion.div)`
   width: 100vw;
@@ -93,7 +94,9 @@ const App = () => {
               animate={'current'}
               variants={variants}
             >
-              <ControllLink />
+              <Error>
+                <ControllLink />
+              </Error>
             </PageBody>
           }
         />
@@ -106,7 +109,9 @@ const App = () => {
               animate={'current'}
               variants={variants}
             >
-              <Manager />
+              <Error />
+                <Manager />
+              <Error />
             </PageBody>
           }
         />
@@ -119,7 +124,9 @@ const App = () => {
               animate={'current'}
               variants={variants}
             >
-              <Create />
+              <Error>
+                <Create />
+              </Error>
             </PageBody>
           }
         />
@@ -132,7 +139,9 @@ const App = () => {
               animate={'current'}
               variants={variants}
             >
-              <Symbol />
+              <Error>
+                <Symbol />
+              </Error>
             </PageBody>
           }
         />
