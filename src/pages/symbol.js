@@ -271,7 +271,7 @@ const Symbol = () => {
   const [symbol, setSymbol] = useState(null)
 
   const [dickCount, setDickCount] = useState('1')
-      , [localDickCount, setLocalDickCount] = useState(1)
+      , [localDickCount, setLocalDickCount] = useLocalStorage(`ldc-${symbolName}`, 0)
 
   const [dicksSymbolAccess, setDicksSymbolAccess] = useLocalStorage(`dfa-${symbolName}`, 0)
 
@@ -304,13 +304,13 @@ const Symbol = () => {
               setDickCount(data[0])
             })
         }
-        
+
         return s
       })
     }, 10000)
 
     return () => clearInterval(intervalId)
-  }, [symbolName])
+  }, [symbolName, setLocalDickCount])
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -320,7 +320,7 @@ const Symbol = () => {
     }, 60000)
 
     return () => clearInterval(intervalId)
-  }, [symbolName])
+  }, [symbolName, setDickCount])
 
   const showGoals = symbol && symbol.goals
                       .filter(g => g.show)
