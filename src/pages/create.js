@@ -14,7 +14,7 @@ const DescriptionWrapper = styled.div`
   width: calc(100% - 20px);
   box-sizing: border-box;
   height: 100%;
-  padding: 20px;
+  padding: 19.5px;
   background: rgba(255, 216, 216, 0.42);
   border-radius: 15px;
   margin-bottom: 12px;
@@ -35,9 +35,6 @@ const DescriptionWrapper = styled.div`
 const Input = styled.input`
   max-width: 666px;
   width: 100%;
-  min-height: 71px;
-  max-height: 71px;
-  height: 100%;
   background: rgba(255, 216, 216, 0.42);
   border-radius: 15px;
   margin-bottom: 15px;
@@ -48,6 +45,7 @@ const Input = styled.input`
   font-weight: bold;
   font-size: 27px;
   line-height: 32px;
+  padding: 19.5px;
   padding-left: 17px;
   padding-right: 17px;
   box-sizing: border-box;
@@ -66,18 +64,18 @@ const Input = styled.input`
 
 const BigButton = styled.div`
   min-height: 71px;
-  max-height: 71px;
-  height: 100%;
   background: rgba(255, 216, 216, 0.42);
   border-radius: 15px;
   margin-bottom: 15px;
   border: none;
   outline: none;
+  text-align: center;
   font-family: Roboto;
   font-style: normal;
   font-weight: bold;
   font-size: 27px;
   line-height: 32px;
+  padding: 19.5px;
   padding-left: 17px;
   padding-right: 17px;
   box-sizing: border-box;

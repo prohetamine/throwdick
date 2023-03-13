@@ -10,9 +10,6 @@ import SwitherButton from './../components/swither-button'
 const SearchBox = styled.input`
   max-width: 666px;
   width: 100%;
-  min-height: 71px;
-  max-height: 71px;
-  height: 100%;
   background: rgba(255, 216, 216, 0.42);
   border-radius: 15px;
   margin-bottom: 15px;
@@ -24,6 +21,7 @@ const SearchBox = styled.input`
   font-weight: bold;
   font-size: 27px;
   line-height: 32px;
+  padding: 19.5px;
   padding-left: 17px;
   padding-right: 17px;
   box-sizing: border-box;
@@ -67,8 +65,7 @@ const DescriptionWrapper = styled.div`
   max-width: 686px;
   width: calc(100% - 20px);
   box-sizing: border-box;
-  height: 100%;
-  padding: 20px;
+  padding: 19.5px;
   background: rgba(255, 216, 216, 0.42);
   border-radius: 15px;
   margin-bottom: 12px;

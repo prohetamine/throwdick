@@ -16,8 +16,7 @@ const DescriptionWrapper = styled.div`
   max-width: 686px;
   width: calc(100% - 20px);
   box-sizing: border-box;
-  height: 100%;
-  padding: 20px;
+  padding: 19.5px;
   background: rgba(255, 216, 216, 0.42);
   border-radius: 15px;
   margin-bottom: 12px;
@@ -38,9 +37,6 @@ const DescriptionWrapper = styled.div`
 const Input = styled.input`
   max-width: 666px;
   width: 100%;
-  min-height: 71px;
-  max-height: 71px;
-  height: 100%;
   background: rgba(255, 216, 216, 0.42);
   border-radius: 15px;
   margin-bottom: 15px;
@@ -51,6 +47,7 @@ const Input = styled.input`
   font-weight: bold;
   font-size: 27px;
   line-height: 32px;
+  padding: 19.5px;
   padding-left: 17px;
   padding-right: 17px;
   box-sizing: border-box;
@@ -78,18 +75,18 @@ const Wrapper = styled.div`
 
 const BigButton = styled.div`
   min-height: 71px;
-  max-height: 71px;
-  height: 100%;
   background: rgba(255, 216, 216, 0.42);
   border-radius: 15px;
   margin-bottom: 15px;
   border: none;
   outline: none;
+  text-align: center;
   font-family: Roboto;
   font-style: normal;
   font-weight: bold;
   font-size: 27px;
   line-height: 32px;
+  padding: 19.5px;
   padding-left: 17px;
   padding-right: 17px;
   box-sizing: border-box;
@@ -387,7 +384,7 @@ const ControllLink = () => {
       <UserListLoad src={loader} />
       <BlockTitle>Profile</BlockTitle>
       <Input value={title} onChange={({ target: { value } }) => setTitle(value)} placeholder='Title' />
-      <Input value={pic} onChange={({ target: { value } }) => setPic(value)} placeholder='Picture url' />
+      <Input value={pic} onChange={({ target: { value } }) => setPic(value)} placeholder='Picture url (use imgur.com or etc)' />
       <Input value={goalsAccess} onChange={({ target: { value } }) => setGoalAccess(value)} placeholder='Goal access' />
       <Wrapper>
         <BigButton style={{ marginRight: '20px' }} onClick={() => setSymbolType('dick')}>Dick {symbolType === 'dick' ? '✅' : '❌'}</BigButton>
@@ -419,7 +416,7 @@ const ControllLink = () => {
         >Link {goalType === 'link' ? '✅' : '❌'}</BigButton>
       </Wrapper>
       <Wrapper>
-        <BigButton onClick={() => setGoalContent(s => [...s, goalType === 'photo' ? '' : { name: '', url: '', color: '#fa0' }])}>Create {goalType} +</BigButton>
+        <BigButton onClick={() => setGoalContent(s => [...s, goalType === 'photo' ? '' : { name: '', url: '', color: '#f72626' }])}>Create {goalType} +</BigButton>
       </Wrapper>
       {
         goalContent.map((content, i) => (
@@ -441,7 +438,7 @@ const ControllLink = () => {
                   </Wrapper>
                 )
                 : (
-                  <Input value={content} onChange={({ target: { value } }) => setGoalContent(s => s.map((c, _i) => _i === i ? value : c))} placeholder='Pictrue url' />
+                  <Input value={content} onChange={({ target: { value } }) => setGoalContent(s => s.map((c, _i) => _i === i ? value : c))} placeholder='Pictrue url (use imgur.com or etc)' />
                 )
             }
           </Wrapper>
