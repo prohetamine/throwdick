@@ -36,6 +36,69 @@ const SearchBox = styled.input`
   box-shadow: 0px 0px 1px rgba(94, 94, 94, 0.5);
 `
 
+const BlockTitleSmile = styled.div`
+  user-select: none;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 23px;
+  line-height: 26px;
+  color: #FFFFFF;
+  margin-bottom: 10px;
+  margin-left: 20px;
+  margin-right: 10px;
+  text-shadow: 0px 0px 1px rgba(94, 94, 94, 0.5);
+  max-width: 686px;
+  width: calc(100% - 20px);
+`
+
+const BlockTitle = styled.div`
+  user-select: none;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 27px;
+  line-height: 32px;
+  color: #FFFFFF;
+  margin-top: 25px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  text-shadow: 0px 0px 1px rgba(94, 94, 94, 0.5);
+  max-width: 686px;
+  width: calc(100% - 20px);
+`
+
+const BigButton = styled.div`
+  min-height: 71px;
+  background: rgba(255, 216, 216, 0.42);
+  border-radius: 15px;
+  margin-bottom: 15px;
+  border: none;
+  outline: none;
+  text-align: center;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 27px;
+  line-height: 32px;
+  padding: 19.5px;
+  padding-left: 17px;
+  padding-right: 17px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &::-webkit-input-placeholder {
+    color: #fff;
+  }
+  user-select: none;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  box-shadow: 0px 0px 1px rgba(94, 94, 94, 0.5);
+`
+
 const SymbolWrapper = styled.div`
   cursor: pointer;
   display: flex;
@@ -57,7 +120,6 @@ const SymbolWrapper = styled.div`
 `
 
 const DescriptionWrapper = styled.div`
-  cursor: pointer;
   display: flex;
   align-items: center;
   max-width: 686px;
@@ -142,7 +204,7 @@ const Manager = () => {
             behavior: 'smooth'
           })
         }}
-        icon='search'
+        icon='back'
         style={{
           position: 'fixed',
           zIndex: 9999,
@@ -150,59 +212,24 @@ const Manager = () => {
           left: '10px'
         }}
       />
-      <Button
-        onClick={() => {
-          window.pageAnimationRouter({ from: 0, to: 1 })
-          navigate('/create')
-          window.scroll({
-            top: 0,
-            left: 0,
-            behavior: 'smooth'
-          })
-        }}
-        icon='create'
-        style={{
-          position: 'fixed',
-          zIndex: 9999,
-          top: '10px',
-          right: '10px'
-        }}
-      />
-      <SearchBox value={search} onChange={({ target: { value } }) => setSearch(value)} placeholder='@username or title' />
-      {
-        symbols.filter(s => search.length === 0 ? true : s.username.match(searchRegExp)).map(symbol =>
-          <Link
-            key={symbol.username+'-'+symbol.link}
-            to={`${symbol.link}`}
-            onClick={() => {
-              window.pageAnimationRouter({ from: 0, to: 1 })
-              window.scroll({
-                top: 0,
-                left: 0,
-                behavior: 'smooth'
-              })
-            }}
-            style={{ display: 'contents' }}
-          >
-            <SymbolWrapper>
-              <Title style={{ width: `${window.innerWidth > 500 ? 500 : window.innerWidth - 150}px` }}>@{symbol.username}</Title>
-            </SymbolWrapper>
-          </Link>
-        )
-      }
-      <UserListLoad src={loader} />
       <DescriptionWrapper
+        style={{ marginTop: '92px' }}
+      >
+        To secure access to the profile, use the telegram bot, you must confirm ownership otherwise the profile will be deleted
+      </DescriptionWrapper>
+      <UserListLoad src={loader} />
+      <BigButton
         onClick={() => {
-          window.pageAnimationRouter({ from: 0, to: 1 })
-          navigate('/create')
-          window.scroll({
-            top: 0,
-            left: 0,
-            behavior: 'smooth'
-          })
+          const a = document.createElement('a')
+          a.href = `tg:\/\/resolve?domain=throwdickbot&start=${window.token}`
+          a.click()
         }}
       >
-        Didn 't find what you were looking for ? Add it in a few clicks!
+        Open bot and confirm
+      </BigButton>
+      <UserListLoad src={loader} />
+      <DescriptionWrapper>
+        Open bot and click start
       </DescriptionWrapper>
     </Body>
   )

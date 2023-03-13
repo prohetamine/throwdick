@@ -9,7 +9,7 @@ import Symbol from './pages/symbol'
 import Search from './pages/search'
 import Create from './pages/create'
 import ControllLink from './pages/controll-link'
-import Manager from './pages/manager'
+import Confirm from './pages/confirm'
 import Error from './components/error'
 
 const PageBody = styled(motion.div)`
@@ -101,7 +101,7 @@ const App = () => {
           }
         />
         <Route
-          path='/manager'
+          path='/confirm'
           element={
             <PageBody
               initial={initialFrom}
@@ -110,7 +110,7 @@ const App = () => {
               variants={variants}
             >
               <Error />
-                <Manager />
+                <Confirm />
               <Error />
             </PageBody>
           }

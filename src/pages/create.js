@@ -116,25 +116,18 @@ const Create = () => {
 
   const create = username => {
     fetch(`${window.host}/create/${username}`)
-      .then(data => data.text())
-      .then(data => {
-        if (window.localStorage.manager) {
-          window.localStorage.manager = JSON.stringify([
-            ...JSON.parse(window.localStorage.manager),
-            {
-              username,
-              link: data
-            }
-          ])
+      .then(data => data.json())
+      .then(token => {
+        if (token) {
+          window.token = token
+          window.pageAnimationRouter({ from: 0, to: 1 })
+          navigate('/confirm')
         } else {
-          window.localStorage.manager = JSON.stringify([{
-            username,
-            link: data
-          }])
+          window.pageAnimationRouter({ from: 1, to: 0 })
+          navigate('/search')
         }
-
-        window.pageAnimationRouter({ from: 0, to: 1 })
-        navigate(data)
+        //window.pageAnimationRouter({ from: 0, to: 1 })
+        //navigate(data)
       })
   }
 
@@ -162,43 +155,12 @@ const Create = () => {
           left: '10px'
         }}
       />
-      <Button
-        onClick={() => {
-          window.pageAnimationRouter({ from: 0, to: 1 })
-          navigate('/manager')
-          window.scroll({
-            top: 0,
-            left: 0,
-            behavior: 'smooth'
-          })
-        }}
-        icon='manager'
-        style={{
-          position: 'fixed',
-          zIndex: 9999,
-          top: '10px',
-          right: '10px'
-        }}
-      />
       <DescriptionWrapper>
-        Username is a link to the symbol page, it cannot be changed after creation
+        Symbolname cannot be changed in the future
       </DescriptionWrapper>
       <UserListLoad src={loader} />
-      <Input value={username} placeholder='username' onChange={({ target: { value } }) => setUsername(value)} />
-      <div style={{ display: 'flex' }}>
-        <BigButton onClick={() => create(username)}>Create symbol</BigButton>
-        <BigButton
-          onClick={() => {
-            window.pageAnimationRouter({ from: 0, to: 1 })
-            navigate('/manager')
-            window.scroll({
-              top: 0,
-              left: 0,
-              behavior: 'smooth'
-            })
-          }}
-        >My symbols</BigButton>
-      </div>
+      <Input value={username} placeholder='@symbolname' onChange={({ target: { value } }) => setUsername(value)} />
+      <BigButton onClick={() => create(username)}>Create symbol</BigButton>
     </Body>
   )
 }
