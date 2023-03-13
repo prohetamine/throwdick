@@ -80,7 +80,7 @@ const CopyButton = (props) => {
         }}
       >
         <CopyToClipboard
-          text={window.location.href}
+          text={window.location.href.replace(/\/#/, '')}
           onCopy={() => {
             setCopy(true)
 
