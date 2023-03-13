@@ -349,6 +349,7 @@ const ControllLink = () => {
       .then(data => {
         const update = document.querySelector('.update')
         update.style.bottom = '10px'
+        update.style.display = 'flex'
         update.innerHTML = 'Updated 👍'
 
         setTimeout(() => {
@@ -357,8 +358,8 @@ const ControllLink = () => {
       })
       .catch(data => {
         const update = document.querySelector('.update')
-
         update.style.bottom = '10px'
+        update.style.display = 'flex'
         update.innerHTML = 'Updated error 😭'
 
         setTimeout(() => {
@@ -391,6 +392,7 @@ const ControllLink = () => {
           .then(data => {
             const update = document.querySelector('.update')
             update.style.bottom = '10px'
+            update.style.display = 'flex'
             update.innerHTML = 'Updated 👍'
 
             setTimeout(() => {
@@ -399,8 +401,8 @@ const ControllLink = () => {
           })
           .catch(data => {
             const update = document.querySelector('.update')
-
             update.style.bottom = '10px'
+            update.style.display = 'flex'
             update.innerHTML = 'Updated error 😭'
 
             setTimeout(() => {
