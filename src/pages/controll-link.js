@@ -362,6 +362,24 @@ const ControllLink = () => {
           left: '10px'
         }}
       />
+      <Button
+        onClick={() => {
+          window.pageAnimationRouter({ from: 0, to: 1 })
+          navigate('/manager')
+          window.scroll({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+          })
+        }}
+        icon='manager'
+        style={{
+          position: 'fixed',
+          zIndex: 9999,
+          top: '66px',
+          right: '10px'
+        }}
+      />
       <CopyButton />
       <DescriptionWrapper>
         This is a permanent link to your symbol, only with it you will be able to access editing again, save it so as not to lose it

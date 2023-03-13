@@ -309,6 +309,16 @@ const Symbol = () => {
     return () => clearInterval(intervalId)
   }, [symbolName])
 
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      fetch(`${window.host}/add-dicks-for/${symbolName}?c=${0}`)
+        .then(data => data.json())
+        .then(data => setDickCount(data[0]))
+    }, 60000)
+
+    return () => clearInterval(intervalId)
+  }, [symbolName])
+
   const showGoals = symbol && symbol.goals
                       .filter(g => g.show)
                       .sort((a, b) => b.date - a.date)
