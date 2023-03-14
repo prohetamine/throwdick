@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { useNavigate, useLocation } from 'react-router-dom'
 import loader from './../assets/loader.svg'
 import BigNumber from 'bignumber.js'
-
 import Body from './../components/body'
 import Button from './../components/button'
 
@@ -285,6 +284,10 @@ const GoalProgressPin = (() => {
   }
 })()
 
+const colors = ['#B80000', '#DB3E00', '#FCCB00', '#008B02', '#006B76', '#1273DE', '#004DCF', '#5300EB', '#EB9694', '#FAD0C3', '#FEF3BD', '#C1E1C5', '#BEDADC', '#C4DEF6', '#BED3F3', '#D4C4FB']
+
+const randomColor = () => colors[parseInt(Math.random() * colors.length)]
+
 const ControllLink = () => {
   const navigate = useNavigate()
       , location = useLocation()
@@ -507,7 +510,7 @@ const ControllLink = () => {
                   >
                     <Input value={content.name} onChange={({ target: { value } }) => setGoalContent(s => s.map((c, _i) => _i === i ? ({ ...c, name: value }) : c))} placeholder='Name' />
                     <Input value={content.url} onChange={({ target: { value } }) => setGoalContent(s => s.map((c, _i) => _i === i ? ({ ...c, url: value }) : c))} placeholder='URL' />
-                    <Input value={content.color} onChange={({ target: { value } }) => setGoalContent(s => s.map((c, _i) => _i === i ? ({ ...c, color: value }) : c))} placeholder='Color' />
+                    <BigButton style={{ marginLeft: '10px' }} onClick={() => setGoalContent(s => s.map((c, _i) => _i === i ? ({ ...c, color: randomColor() }) : c))}>{content.color} <div style={{ marginLeft: '10px', borderRadius: '10px', padding: '20px', background: content.color }}></div></BigButton>
                   </Wrapper>
                 )
                 : (
