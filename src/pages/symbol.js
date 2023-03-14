@@ -176,7 +176,7 @@ const LinkPin = (() => {
     useEffect(() => {
       if (url.match(/throwdick/)) {
         const _url = new URL(url)
-        const symbolName = _url.hash.replace(/#\//,'')
+        const symbolName = _url.hash.replace(/#\//,'') || _url.pathname.replace(/\//, '')
 
         fetch(`${window.host}/get-dicks-for/${symbolName}`)
           .then(data => data.json())
