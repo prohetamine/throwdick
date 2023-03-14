@@ -174,7 +174,7 @@ const LinkPin = (() => {
     const [dicks, setDicks] = useState(false)
 
     useEffect(() => {
-      if (url.match(/https:\/\/throwdick\.com/) || !url.match(/(http|\.|www)/)) {
+      if (url.match(/(http:\/\/|https:\/\/|https:\/\/server\.)throwdick\.com/) || !url.match(/(http|\.|www)/)) {
         try {
           const _url = new URL(url)
           const symbolName = _url.hash.replace(/#\//,'') || _url.pathname.replace(/\//, '')
