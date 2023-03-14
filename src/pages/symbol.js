@@ -174,14 +174,16 @@ const LinkPin = (() => {
     const [dicks, setDicks] = useState(false)
 
     useEffect(() => {
-      if (url.match(/throwdick/) || !url.match(/(http|\.|www)/)) {
+      if (url.match(/https:\/\/throwdick\.com/) || !url.match(/(http|\.|www)/)) {
         try {
           const _url = new URL(url)
           const symbolName = _url.hash.replace(/#\//,'') || _url.pathname.replace(/\//, '')
 
-          fetch(`${window.host}/get-dicks-for/${symbolName}`)
-            .then(data => data.json())
-            .then(data => setDicks(data[0]))
+          if (symbolName) {
+            fetch(`${window.host}/get-dicks-for/${symbolName}`)
+              .then(data => data.json())
+              .then(data => setDicks(data[0]))
+          }
         } catch (e) {
           fetch(`${window.host}/get-dicks-for/${url}`)
             .then(data => data.json())
