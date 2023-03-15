@@ -419,7 +419,7 @@ const Symbol = () => {
                                     title={data.name}
                                     isClickable={dicksSymbolAccess > symbol.goalsAccess}
                                     style={{
-                                      filter: `blur(${dicksSymbolAccess < symbol.goalsAccess ? '3px' : '0px'})`
+                                      filter: `blur(${dicksSymbolAccess < symbol.goalsAccess ? '2px' : '0px'})`
                                     }}
                                   />
                                 )
@@ -499,7 +499,7 @@ const Symbol = () => {
                                   title={data.name}
                                   isClickable={!(new BigNumber(symbol.goalsAccess)).isGreaterThan(new BigNumber(dicksSymbolAccess))}
                                   style={{
-                                    filter: `blur(${dicksSymbolAccess < symbol.goalsAccess ? '3px' : '0px'})`
+                                    filter: `blur(${dicksSymbolAccess < symbol.goalsAccess ? '2px' : '0px'})`
                                   }}
                                 />
                               )
@@ -508,7 +508,7 @@ const Symbol = () => {
                                   key={i}
                                   onClick={() => (new BigNumber(symbol.goalsAccess)).isGreaterThan(new BigNumber(dicksSymbolAccess)) ? '' : window.open(data, '_blank')}
                                   style={{
-                                    marginRight: i % 2 === 0 ? goal[goal.type].length === 1 ? '0px' : '5px' : '0px',
+                                    marginRight: i % 2 === 0 ? goal[goal.type].length === 1 ? '0px' : '10px' : '0px',
                                     marginBottom: '10px',
                                     filter: `blur(${(new BigNumber(symbol.goalsAccess)).isGreaterThan(new BigNumber(dicksSymbolAccess)) ? '10px' : '0px'})`
                                   }}
