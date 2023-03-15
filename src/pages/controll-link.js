@@ -304,7 +304,7 @@ const ControllLink = () => {
 
   const [goalTitle, setGoalTitle] = useState('')
       , [goalCount, setGoalCount] = useState('')
-      , [goalType, setGoalType] = useState('link')
+      , [goalType, setGoalType] = useState('photo')
       , [goalContent, setGoalContent] = useState([])
 
   useEffect(() => {
@@ -539,6 +539,15 @@ const ControllLink = () => {
           }}
           style={{ marginRight: '20px' }}
         >Push goal to list</BigButton>
+        <BigButton
+          onClick={() => {
+            setGoalTitle('')
+            setGoalCount('')
+            setGoalType('photo')
+            setGoalContent([])
+          }}
+          style={{ marginRight: '20px' }}
+        >Clear goal</BigButton>
       </Wrapper>
       {
         progressGoals.length > 0
@@ -588,6 +597,16 @@ const ControllLink = () => {
                         <GoalControll
                           onClick={() => setGoals(s => s.map(_goal => goal.date === _goal.date ? ({ ..._goal, pinned: !_goal.pinned }) : _goal))}
                         >{!!goal.pinned ? 'UNPINNED' : 'PINNED'}</GoalControll>
+                        <GoalControll
+                          onClick={
+                            () => {
+                              setGoalTitle(goal.title)
+                              setGoalCount('')
+                              setGoalType(goal.type)
+                              setGoalContent(goal[goal.type])
+                            }
+                          }
+                        >COPY</GoalControll>
                         <GoalControll
                           onClick={() => setGoals(s => s.filter(_goal => goal.date !== _goal.date))}
                         >REMOVE GOAL</GoalControll>
