@@ -417,20 +417,20 @@ const Symbol = () => {
                                     url={data.url}
                                     color={data.color}
                                     title={data.name}
-                                    isClickable={dicksSymbolAccess > symbol.goalsAccess}
+                                    isClickable={goal.notRequirePersonalGoalAccess || !(new BigNumber(symbol.goalsAccess)).isGreaterThan(new BigNumber(dicksSymbolAccess))}
                                     style={{
-                                      filter: `blur(${dicksSymbolAccess < symbol.goalsAccess ? '2px' : '0px'})`
+                                      filter: goal.notRequirePersonalGoalAccess ?  'blur(0px)' : `blur(${(new BigNumber(symbol.goalsAccess)).isGreaterThan(new BigNumber(dicksSymbolAccess)) ? '2px' : '0px'})`
                                     }}
                                   />
                                 )
                                 : (
                                   <PhotoPin
                                     key={i}
-                                    onClick={() => dicksSymbolAccess < symbol.goalsAccess ? '' : window.open(data, '_blank')}
+                                    onClick={() => goal.notRequirePersonalGoalAccess || !(new BigNumber(symbol.goalsAccess)).isGreaterThan(new BigNumber(dicksSymbolAccess)) ? window.open(data, '_blank') : ''}
                                     style={{
                                       marginRight: i % 2 === 0 ? '10px' : '0px',
                                       marginBottom: '10px',
-                                      filter: `blur(${dicksSymbolAccess < symbol.goalsAccess ? '10px' : '0px'})`
+                                      filter: goal.notRequirePersonalGoalAccess ? 'blur(0px)' : `blur(${(new BigNumber(symbol.goalsAccess)).isGreaterThan(new BigNumber(dicksSymbolAccess)) ? '10px' : '0px'})`
                                     }}
                                     isOnce={goal[goal.type].length === 1}
                                     src={data}
@@ -478,7 +478,15 @@ const Symbol = () => {
                         ? (
                           <>
                             <GoalPin>Pined {goal[goal.type].length} {goal.type}{goal[goal.type].length > 1 ? 's': ''}</GoalPin>
-                            <LocalGoalProgressPin remains={(new BigNumber(symbol.goalsAccess)).minus(dicksSymbolAccess).toFormat().split(',').join(' ')} symbolType={symbol.symbolType} />
+                            {
+                              goal.notRequirePersonalGoalAccess
+                                ? (
+                                  null
+                                )
+                                : (
+                                  <LocalGoalProgressPin remains={(new BigNumber(symbol.goalsAccess)).minus(dicksSymbolAccess).toFormat().split(',').join(' ')} symbolType={symbol.symbolType} />
+                                )
+                            }
                           </>
                         )
                         : (
@@ -497,20 +505,20 @@ const Symbol = () => {
                                   url={data.url}
                                   color={data.color}
                                   title={data.name}
-                                  isClickable={!(new BigNumber(symbol.goalsAccess)).isGreaterThan(new BigNumber(dicksSymbolAccess))}
+                                  isClickable={goal.notRequirePersonalGoalAccess || !(new BigNumber(symbol.goalsAccess)).isGreaterThan(new BigNumber(dicksSymbolAccess))}
                                   style={{
-                                    filter: `blur(${dicksSymbolAccess < symbol.goalsAccess ? '2px' : '0px'})`
+                                    filter: goal.notRequirePersonalGoalAccess ?  'blur(0px)' : `blur(${(new BigNumber(symbol.goalsAccess)).isGreaterThan(new BigNumber(dicksSymbolAccess)) ? '2px' : '0px'})`
                                   }}
                                 />
                               )
                               : (
                                 <PhotoPin
                                   key={i}
-                                  onClick={() => (new BigNumber(symbol.goalsAccess)).isGreaterThan(new BigNumber(dicksSymbolAccess)) ? '' : window.open(data, '_blank')}
+                                  onClick={() => goal.notRequirePersonalGoalAccess || !(new BigNumber(symbol.goalsAccess)).isGreaterThan(new BigNumber(dicksSymbolAccess)) ? window.open(data, '_blank') : ''}
                                   style={{
                                     marginRight: i % 2 === 0 ? goal[goal.type].length === 1 ? '0px' : '10px' : '0px',
                                     marginBottom: '10px',
-                                    filter: `blur(${(new BigNumber(symbol.goalsAccess)).isGreaterThan(new BigNumber(dicksSymbolAccess)) ? '10px' : '0px'})`
+                                    filter: goal.notRequirePersonalGoalAccess ? 'blur(0px)' : `blur(${(new BigNumber(symbol.goalsAccess)).isGreaterThan(new BigNumber(dicksSymbolAccess)) ? '10px' : '0px'})`
                                   }}
                                   isOnce={goal[goal.type].length === 1}
                                   src={data}

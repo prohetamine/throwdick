@@ -305,6 +305,7 @@ const ControllLink = () => {
   const [goalTitle, setGoalTitle] = useState('')
       , [goalCount, setGoalCount] = useState('')
       , [goalType, setGoalType] = useState('photo')
+      , [notRequirePersonalGoalAccess, setNotRequirePersonalGoalAccess] = useState(false)
       , [goalContent, setGoalContent] = useState([])
 
   useEffect(() => {
@@ -490,6 +491,14 @@ const ControllLink = () => {
           }}
         >Link {goalType === 'link' ? '✅' : '❌'}</BigButton>
       </Wrapper>
+      <Wrapper>
+        <BigButton
+          onClick={() =>
+            setNotRequirePersonalGoalAccess(s => !s)
+          }
+          style={{ marginRight: '20px' }}
+        >Available without a fee {notRequirePersonalGoalAccess ? '✅' : '❌'}</BigButton>
+      </Wrapper>
       <BlockTitleSmile>Add links or photos</BlockTitleSmile>
       <Wrapper>
         <BigButton onClick={() => setGoalContent(s => [...s, goalType === 'photo' ? '' : { name: '', url: '', color: '#f72626' }])}>Create {goalType} +</BigButton>
@@ -532,6 +541,7 @@ const ControllLink = () => {
                   title: goalTitle || 'Empty',
                   count: (new BigNumber(dickCount).plus(goalCount || 0)).toFormat().split(',').join(''),
                   type: goalType,
+                  notRequirePersonalGoalAccess,
                   [goalType]: goalContent.filter(c => goalType ==='link' ? (c.name && c.url && c.color) : c)
                 }
               ]
