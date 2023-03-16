@@ -615,7 +615,7 @@ const ControllLink = () => {
                               setGoalCount('')
                               setGoalType(goal.type)
                               setGoalContent(goal[goal.type])
-                              setNotRequirePersonalGoalAccess(goal.notRequirePersonalGoalAccess)
+                              setNotRequirePersonalGoalAccess(goal.notRequirePersonalGoalAccess || false)
                             }
                           }
                         >COPY</GoalControll>
