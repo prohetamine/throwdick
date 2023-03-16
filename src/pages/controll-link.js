@@ -284,7 +284,7 @@ const GoalProgressPin = (() => {
   }
 })()
 
-const colors = ['#B80000', '#DB3E00', '#FCCB00', '#008B02', '#006B76', '#1273DE', '#004DCF', '#5300EB']
+const colors = ['#B80000', '#DB3E00', '#FCCB00', '#008B02', '#006B76', '#1273DE', '#004DCF', '#5300EB', '#AB00B8', '#7BAA02', '#C99200', '#00BD7D']
 
 const randomColor = () => colors[parseInt(Math.random() * colors.length)]
 
