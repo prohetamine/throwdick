@@ -555,6 +555,7 @@ const ControllLink = () => {
             setGoalCount('')
             setGoalType('photo')
             setGoalContent([])
+            setNotRequirePersonalGoalAccess(false)
           }}
           style={{ marginRight: '20px' }}
         >Clear goal</BigButton>
@@ -614,6 +615,7 @@ const ControllLink = () => {
                               setGoalCount('')
                               setGoalType(goal.type)
                               setGoalContent(goal[goal.type])
+                              setNotRequirePersonalGoalAccess(goal.notRequirePersonalGoalAccess)
                             }
                           }
                         >COPY</GoalControll>
