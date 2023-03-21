@@ -195,7 +195,7 @@ const LinkPin = (() => {
     }, [url])
 
     return dicks ? (
-      <Body style={style} target='_blank' onClick={e => isClickable ? '' : e.preventDefault()} href={isClickable ? url : '/#/hidden'} color={color}>{title} ({normalizeCount((new BigNumber(dicks)).toFormat().split(',').join(' '))[0][0]})</Body>
+      <Body style={style} target='_blank' onClick={e => isClickable ? '' : e.preventDefault()} href={isClickable ? url : '/#/hidden'} color={color}>{title} ({(nc => nc[0][0] + ' ' + nc[1].replace(/\+/, ''))(normalizeCount((new BigNumber(dicks)).toFormat().split(',').join(' ')))})</Body>
     ) : (
       <Body style={style} target='_blank' onClick={e => isClickable ? '' : e.preventDefault()} href={isClickable ? url : '/#/hidden'} color={color}>{title}</Body>
     )
