@@ -268,7 +268,7 @@ const DicksCounter = ({ onDick, dickCount, disabled, symbolType }) => {
         transition={{ type: 'spring', stiffness: 1000 }}
       >
       {
-        _dCount[0]
+        _dCount[0][1]
       }
       </Count>
       <SmallCount

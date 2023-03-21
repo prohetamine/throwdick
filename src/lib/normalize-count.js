@@ -1,5 +1,5 @@
 const types = {
-  '0': ['', 'd'],
+  '0': ['d', 'd'],
   '1': ['k', 'k'],
   '2': ['M', ' Million'],
   '3': ['M', ' Milliard'],
@@ -22,9 +22,9 @@ const types = {
   '20': ['O', ' Octodecillion'],
   '21': ['N', ' Novemdecillion'],
   '22': ['V', ' Vigintillion'],
-  '23': ['Centillion', ' Centillion'],
-  '24': ['Fuckillion', ' Fuckillion'],
-  '25': ['Dickillion', ' Dickillion'],
+  '23': ['C', ' Centillion'],
+  '24': ['FK', ' Fuckillion'],
+  '25': ['Dk', ' Dickillion'],
 }
 
 const normalizeCount = count => {
@@ -34,10 +34,29 @@ const normalizeCount = count => {
     return ['🔥 Infinity Dicks 🔥', '']
   } else {
     const counts = numbers.map((numb, i) => {
-      return [numb > 0 ? numb + types[i][0] : '', numb > 0 ? numb + '' + types[i][1] : '']
+      return [
+        numb > 0 ? numb + '' + types[i][0] : '',
+        numb > 0 ? numb + '' + types[i][1] : ''
+      ]
     })
 
-    return [counts.reverse()[0][1], parseInt(counts.map(e => e[0]).filter(f => f).slice(1).join(' ')) > 0 ? '+ ' + counts.map(e => e[0]).filter(f => f).slice(1).slice(-3).join(' ') + 'd' : '']
+    const countsReverse = counts.reverse()
+
+    return [
+      [
+        countsReverse[0][0],
+        countsReverse[0][1]
+      ],
+      parseInt(
+        counts
+          .map(e => e[0])
+          .filter(f => f)
+          .slice(1)
+          .join(' ')
+      ) > 0
+        ? '+ ' + counts.map(e => e[0]).filter(f => f).slice(1).slice(-3).join(' ')
+        : ''
+    ]
   }
 }
 

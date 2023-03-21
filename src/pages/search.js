@@ -236,7 +236,7 @@ const Search = () => {
                 <Title style={{ width: `${window.innerWidth > 500 ? 500 : window.innerWidth - 150}px` }}>{symbol.title}</Title>
                 <Urlname style={{ width: `${window.innerWidth > 500 ? 500 : window.innerWidth - 150}px` }}>@{symbol.username}</Urlname>
               </View>
-              <DicksCount>{normalizeCount(symbol.dicks)[0]}</DicksCount>
+              <DicksCount>{normalizeCount(symbol.dicks)[0][0]}</DicksCount>
             </SymbolWrapper>
           </Link>
         )
