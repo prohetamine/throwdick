@@ -4,6 +4,8 @@ import BigNumber from 'bignumber.js'
 import useLocalStorage from 'use-local-storage'
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import normalizeCount from './../lib/normalize-count'
+
 import DicksCounter from './../components/dicks-counter'
 import Body from './../components/body'
 import CopyButton from './../components/copy-button'
@@ -193,7 +195,7 @@ const LinkPin = (() => {
     }, [url])
 
     return dicks ? (
-      <Body style={style} target='_blank' onClick={e => isClickable ? '' : e.preventDefault()} href={isClickable ? url : '/#/hidden'} color={color}>{title} ({(new BigNumber(dicks)).toFormat().split(',').join(' ')})</Body>
+      <Body style={style} target='_blank' onClick={e => isClickable ? '' : e.preventDefault()} href={isClickable ? url : '/#/hidden'} color={color}>{title} ({normalizeCount((new BigNumber(dicks)).toFormat().split(',').join(' '))[0][0]})</Body>
     ) : (
       <Body style={style} target='_blank' onClick={e => isClickable ? '' : e.preventDefault()} href={isClickable ? url : '/#/hidden'} color={color}>{title}</Body>
     )
