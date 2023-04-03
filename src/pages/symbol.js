@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import BigNumber from 'bignumber.js'
 import useLocalStorage from 'use-local-storage'
@@ -274,9 +274,11 @@ const Wrapper = styled.div`
 `
 
 const Symbol = () => {
+  const bodyRef = useRef()
+  
   const location = useLocation()
   const navigate = useNavigate()
-
+  
   const symbolName = location.pathname.replace(/\//, '')
 
   const [symbol, setSymbol] = useState(null)
@@ -289,10 +291,19 @@ const Symbol = () => {
   const [showGoalByScroll, setShowGoalByScroll] = useState(3)
 
   useEffect(() => {
-    window.addEventListener("scrollend", (event) => {
-      setShowGoalByScroll(s => s+1)
-    })
-  }, [])
+    const node = bodyRef.current
+
+    if (node) {
+      const handle = () => {      
+        if (window.scrollY + window.innerHeight > node.scrollHeight - 40) {
+          setShowGoalByScroll(s => s+1)
+        }
+      }
+
+      window.addEventListener('scroll', handle)
+      return () => window.removeEventListener('scroll', handle)
+    }
+  }, [symbol, bodyRef])
 
   useEffect(() => {
     setLocalDickCount(1)
@@ -354,6 +365,7 @@ const Symbol = () => {
 
   return symbol ? (
     <Body
+      ref={bodyRef}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
