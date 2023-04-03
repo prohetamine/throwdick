@@ -442,7 +442,7 @@ const Symbol = () => {
                           )
                           : (
                             <>
-                              <GoalPin>Pined {goal[goal.type].length} {goal.type}{goal[goal.type].length > 1 ? 's': ''}</GoalPin>
+                              <GoalPin>Pinned {goal[goal.type].length} {goal.type}{goal[goal.type].length > 1 ? 's': ''}</GoalPin>
                               <GoalProgressPin request={goal.count} current={dickCount} localDickCount={localDickCount} symbolType={symbol.symbolType} />
                             </>
                           )
@@ -479,7 +479,7 @@ const Symbol = () => {
                       (new BigNumber(symbol.goalsAccess)).isGreaterThan(new BigNumber(dicksSymbolAccess))
                         ? (
                           <>
-                            <GoalPin>Pined {goal[goal.type].length} {goal.type}{goal[goal.type].length > 1 ? 's': ''}</GoalPin>
+                            <GoalPin>Pinned {goal[goal.type].length} {goal.type}{goal[goal.type].length > 1 ? 's': ''}</GoalPin>
                             {
                               goal.notRequirePersonalGoalAccess
                                 ? (
@@ -530,7 +530,7 @@ const Symbol = () => {
                         )
                         : (
                           <>
-                            <GoalPin>Pined {goal[goal.type].length} {goal.type}{goal[goal.type].length > 1 ? 's': ''}</GoalPin>
+                            <GoalPin>Pinned {goal[goal.type].length} {goal.type}{goal[goal.type].length > 1 ? 's': ''}</GoalPin>
                             <GoalProgressPin request={goal.count} current={dickCount} symbolType={symbol.symbolType} />
                           </>
                         )
