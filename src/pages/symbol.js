@@ -286,6 +286,14 @@ const Symbol = () => {
 
   const [dicksSymbolAccess, setDicksSymbolAccess] = useLocalStorage(`dfa-${symbolName}`, 0)
 
+  const [showGoalByScroll, setShowGoalByScroll] = useState(3)
+
+  useEffect(() => {
+    window.addEventListener("scrollend", (event) => {
+      setShowGoalByScroll(s => s+1)
+    })
+  }, [])
+
   useEffect(() => {
     setLocalDickCount(1)
   }, [])
@@ -471,7 +479,7 @@ const Symbol = () => {
               )
           }
           {
-              showGoals.map((goal, i) => (
+              showGoals.slice(0, showGoalByScroll).map((goal, i) => (
                 <GoalWrapper key={goal.title+'-'+goal.date}>
                   <ContentTitle>{goal.title}</ContentTitle>
                   <ContentWrapper style={{ marginTop: dicksSymbolAccess < symbol.goalsAccess ? '20px' : '0px' }}>
